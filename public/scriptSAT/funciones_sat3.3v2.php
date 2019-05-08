@@ -6,10 +6,10 @@ function calcular_semanas($FechaPago, $FechaIngreso)
 {	
 	
 	//echo date_format($date, 'Y-m-d');
-	//$datetime1 = new DateTime($FechaIngreso);
-	$datetime1 = DateTime::createFromFormat('d/m/Y',$FechaIngreso);
-	//$datetime2 = new DateTime($FechaPago);
-	$datetime2 = DateTime::createFromFormat('Y-m-d',$FechaPago);
+	$datetime1 = new DateTime($FechaIngreso);
+	//$datetime1 = DateTime::createFromFormat('d/m/Y',$FechaIngreso);
+	$datetime2 = new DateTime($FechaPago);
+	//$datetime2 = DateTime::createFromFormat('Y-m-d',$FechaPago);
 	$interval = $datetime1->diff($datetime2);
 	return "P".floor(($interval->format('%a') / 7)) . 'W';
 

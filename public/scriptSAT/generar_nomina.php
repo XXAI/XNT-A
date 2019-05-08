@@ -13,6 +13,7 @@ $query_srcSQL = "DROP TABLE IF EXISTS $TablaName";
 
 $srcSQL = $mysqli->query($query_srcSQL) or die($mysqli->error.__LINE__);
 
+//////
 $query_srcSQL = "CREATE TABLE `$TablaName` (
     `NOMBRE_NOMINA` text DEFAULT NULL,
     `RFC` text DEFAULT NULL,
@@ -117,7 +118,7 @@ $query_srcSQL = "CREATE TABLE `$TablaName` (
     `RAMA` varchar(125) DEFAULT NULL,
     PRIMARY KEY (`mmFolio`)
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
-
+/////////
     $srcSQL = $mysqli->query($query_srcSQL) or die($mysqli->error.__LINE__);
 
     echo "Tabla creada con éxito.<br>\n";
@@ -137,7 +138,7 @@ $query_srcSQL = "CREATE TABLE `$TablaName` (
         $numeroRegistros = '';
 
         if($type == "text/plain"){//Si el Mime coincide con CSV
-            $destinationPath = 'C:/laragon/www/reportes-nomina/public/scriptSAT/archivos-csv/';
+            $destinationPath = '/var/www/html-sandbox/reportes-nomina/public/scriptSAT/archivos-csv/';
             
             $csv = $destinationPath . $nombreArchivo.".csv";
 
