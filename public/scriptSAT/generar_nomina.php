@@ -182,7 +182,7 @@ $query_srcSQL = "CREATE TABLE `$TablaName` (
     $storage_path = $public_path.'scriptSAT/';
 
     $zip = new ZipArchive();
-    $zippath = $storage_path."archivos-layout/";
+    $zippath = $storage_path."archivos-layouts/";
     $zipname = "Layouts.SAT.".$carpeta.".zip";
     
     exec("zip -P sat2015 -j -r ".$zippath.$zipname." \"".$zippath.$carpeta."/\"");
