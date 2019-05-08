@@ -183,10 +183,13 @@ $query_srcSQL = "CREATE TABLE `$TablaName` (
 
     $zip = new ZipArchive();
     $zippath = $storage_path."archivos-layout/";
-    $zipname = "layouts.SAT.".$carpeta.".zip";
+    $zipname = "Layouts.SAT.".$carpeta.".zip";
     
     exec("zip -P sat2015 -j -r ".$zippath.$zipname." \"".$zippath.$carpeta."/\"");
     
+    echo '<br>########################## --------------------------------- ###############################################<br>';
+    echo "zip -P sat2015 -j -r ".$zippath.$zipname." \"".$zippath.$carpeta."/\"";
+
     $zip_status = $zip->open($zippath.$zipname);
 
     if ($zip_status === true) {
@@ -199,5 +202,7 @@ $query_srcSQL = "CREATE TABLE `$TablaName` (
         header('Content-Length: ' . filesize($zippath.$zipname));
         
         readfile($zippath.$zipname);
+    }else{
+        echo 'Archivo zip no valido';
     }
 ?>
