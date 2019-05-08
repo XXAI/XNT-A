@@ -3,6 +3,8 @@ require_once("Connections/connSAT.php");
 require_once 'funciones_sat3.3v2.php';
 set_time_limit(0);
 
+//$public_path = '/var/www/html-sandbox/reportes-nomina/public/';
+$public_path = 'C:/laragon/www/reportes-nomina/public/';
 
 $Dias = $_POST['dias'];
 $Periodicidad = $_POST['periodicidad'];
@@ -138,7 +140,7 @@ $query_srcSQL = "CREATE TABLE `$TablaName` (
         $numeroRegistros = '';
 
         if($type == "text/plain"){//Si el Mime coincide con CSV
-            $destinationPath = '/var/www/html-sandbox/reportes-nomina/public/scriptSAT/archivos-csv/';
+            $destinationPath = $public_path.'scriptSAT/archivos-csv/';
             
             $csv = $destinationPath . $nombreArchivo.".csv";
 
@@ -174,6 +176,28 @@ $query_srcSQL = "CREATE TABLE `$TablaName` (
         $mysqli->rollback();
     }
     echo "Se inicia comienzo de generacion de archivos.<br>\n";
-    $Folio = GenerarNominaSAT($TipoNomina, $TablaName, $FechaGeneracion, $FechaInicio, $FechaFinal, $Dias, $Periodicidad, $mysqli);
+    $carpeta = GenerarNominaSAT($TipoNomina, $TablaName, $FechaGeneracion, $FechaInicio, $FechaFinal, $Dias, $Periodicidad, $mysqli);
+    echo "Se termino comienzo de generacion de archivos.<br>\n";
 
+    $storage_path = $public_path;
+
+    $zip = new ZipArchive();
+    $zippath = $storage_path."archivos-layout/";
+    $zipname = "layouts.SAT.".$carpeta.".zip";
+    
+    exec("zip -P sat2015 -j -r ".$zippath.$zipname." \"".$zippath.$carpeta."/\"");
+    
+    $zip_status = $zip->open($zippath.$zipname);
+
+    if ($zip_status === true) {
+
+        $zip->close();
+        //Storage::deleteDirectory("sync");
+        ///Then download the zipped file.
+        header('Content-Type: application/zip');
+        header('Content-disposition: attachment; filename='.$zipname);
+        header('Content-Length: ' . filesize($zippath.$zipname));
+        
+        readfile($zippath.$zipname);
+    }
 ?>

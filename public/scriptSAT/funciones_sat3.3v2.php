@@ -48,6 +48,8 @@ function GenerarNominaSAT($TipoNomina, $TablaName, $FechaGeneracion, $FechaInici
 			//$TipoNomina = 9;
 
 			$Carpeta = "";
+			
+			$carpeta_grupo = $TablaName;
 	
 			do{
 
@@ -63,11 +65,11 @@ function GenerarNominaSAT($TipoNomina, $TablaName, $FechaGeneracion, $FechaInici
 
 
 
-				if($Carpeta != 'archivos-layouts/' . $row_srcSQL["NombreNomina"])
+				if($Carpeta != 'archivos-layouts/'. $carpeta_grupo . '/' . $row_srcSQL["NombreNomina"])
 				{
-					$Carpeta = 'archivos-layouts/' . $row_srcSQL["NombreNomina"];
+					$Carpeta = 'archivos-layouts/'. $carpeta_grupo . '/' . $row_srcSQL["NombreNomina"];
 					$TipoNomina++;
-
+					
 					echo $Carpeta."<br>";
 				}
 
@@ -100,13 +102,11 @@ function GenerarNominaSAT($TipoNomina, $TablaName, $FechaGeneracion, $FechaInici
 
 			}while($row_srcSQL = $srcSQL->fetch_assoc());
 
-			
-			
-
 			echo "Listo: ".$Carpeta." [".$TotalArchivos."]<br>";
 
-			return $Folio;
+			echo "Folio: " . $Folio;
 
+			return $carpeta_grupo;
 }
 
 
