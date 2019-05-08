@@ -197,6 +197,7 @@ $query_srcSQL = "CREATE TABLE `$TablaName` (
         $zip->close();
         //Storage::deleteDirectory("sync");
         ///Then download the zipped file.
+        header('Accept-Ranges: bytes');
         header('Content-Type: application/zip');
         header('Content-disposition: attachment; filename='.$zipname);
         header('Content-Length: ' . filesize($zippath.$zipname));
