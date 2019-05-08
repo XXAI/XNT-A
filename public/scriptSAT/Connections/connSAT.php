@@ -3,10 +3,10 @@ date_default_timezone_set('America/Mexico_City');
 # FileName="Connection_php_mysql.htm"
 # Type="MYSQL"
 # HTTP="true"
-$hostname_connNomina = "localhost";
-$database_connNomina = "nomina"; //uptics_pymegral
-$username_connNomina = "root"; //uptics_pymegral
-$password_connNomina = ""; //d&=qO4ErJhUH
+$hostname_connNomina = "5.196.110.172";
+$database_connNomina = "nomina_reportes"; //uptics_pymegral
+$username_connNomina = "nomina"; //uptics_pymegral
+$password_connNomina = "n0m1n4.2019"; //d&=qO4ErJhUH
 
 $mysqli = new mysqli($hostname_connNomina, $username_connNomina, $password_connNomina, $database_connNomina);
 if ($mysqli->connect_errno) {
