@@ -188,7 +188,7 @@ $query_srcSQL = "CREATE TABLE `$TablaName` (
     exec("zip -P sat2015 -j -r ".$zippath.$zipname." \"".$zippath.$carpeta."/\"");
     
     echo '<br>############################################### ------------------ Archivo ZIP ------------------ ###############################################<br>';
-    echo "<a href='scriptSAT/archivos-layouts/$zipname'>Descargar ZIP</a>";
+    echo "<a href='archivos-layouts/$zipname'>Descargar ZIP</a>";
     //echo "zip -P sat2015 -j -r ".$zippath.$zipname." \"".$zippath.$carpeta."/\"";
 
     /*
