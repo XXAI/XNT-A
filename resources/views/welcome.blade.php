@@ -17,7 +17,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col">
-                        <form id="formulario_nomina" action="/reportes-nomina/public/api/importar_nomina" target="_blank" method="post" enctype="multipart/form-data" >
+                        <form id="formulario_nomina" action="/api/importar_nomina" target="_blank" method="post" enctype="multipart/form-data" >
                             <div class="form-row">
                                 <div class="form-group col-4"> <label>Tipo de año</label> <input class="form-control" type="text" name="tipo_anio" value="(A/C)"/> </div>
                                 <div class="form-group col-4"> <label>Quincena</label> <input class="form-control" type="text" name="quincena" value="01"/> </div>
