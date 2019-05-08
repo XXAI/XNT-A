@@ -1,0 +1,13 @@
+/node_modules
+/public/hot
+/public/storage
+/public/scriptSAT/archivos-csv/*
+/public/scriptSAT/archivos-layouts/*
+/storage/*.key
+/vendor
+.env
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
