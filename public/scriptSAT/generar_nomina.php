@@ -3,8 +3,8 @@ require_once("Connections/connSAT.php");
 require_once 'funciones_sat3.3v2.php';
 set_time_limit(0);
 
-//$public_path = '/var/www/html-sandbox/reportes-nomina/public/';
-$public_path = 'C:/laragon/www/reportes-nomina/public/';
+$public_path = '/var/www/html-sandbox/reportes-nomina/public/';
+//$public_path = 'C:/laragon/www/reportes-nomina/public/';
 
 $Dias = $_POST['dias'];
 $Periodicidad = $_POST['periodicidad'];
@@ -22,7 +22,7 @@ $query_srcSQL = "CREATE TABLE `$TablaName` (
     `CURP` text DEFAULT NULL,
     `NOMBRE` text DEFAULT NULL,
     `TURNO` text DEFAULT NULL,
-    `FECHA_INGRESO` text DEFAULT NULL,
+    `FECHA_INGRESO` date DEFAULT NULL,
     `PUESTO` text DEFAULT NULL,
     `CLUES` text DEFAULT NULL,
     `NUM_EMP` text DEFAULT NULL,
