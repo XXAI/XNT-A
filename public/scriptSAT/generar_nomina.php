@@ -3,7 +3,7 @@ require_once("Connections/connSAT.php");
 require_once 'funciones_sat3.3v2.php';
 set_time_limit(0);
 
-$public_path = '/var/www/html-sandbox/reportes-nomina/public/';
+$public_path = '/usr/local/sistemas/apis/nomina/public/';
 //$public_path = 'C:/laragon/www/reportes-nomina/public/';
 
 $Dias = $_POST['dias'];
@@ -179,7 +179,7 @@ $query_srcSQL = "CREATE TABLE `$TablaName` (
     $carpeta = GenerarNominaSAT($TipoNomina, $TablaName, $FechaGeneracion, $FechaInicio, $FechaFinal, $Dias, $Periodicidad, $mysqli);
     echo "Se termino comienzo de generacion de archivos.<br>\n";
 
-    $storage_path = $public_path;
+    $storage_path = $public_path.'scriptSAT/';
 
     $zip = new ZipArchive();
     $zippath = $storage_path."archivos-layout/";

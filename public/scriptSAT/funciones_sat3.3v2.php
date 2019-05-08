@@ -85,7 +85,7 @@ function GenerarNominaSAT($TipoNomina, $TablaName, $FechaGeneracion, $FechaInici
 
 				$filepath = $Carpeta."/".$row_srcSQL["mmFolio"]."_".$row_srcSQL["CURP"].".txt";
 				$fh = fopen($filepath,"w");
-
+				
 				$HoraGeneracion = date("H:i:s", mktime(0, 0, $Segundo, substr($FechaGeneracion,5,2), substr($FechaGeneracion,8,2), substr($FechaGeneracion,0,4)));
 				
                
@@ -97,8 +97,6 @@ function GenerarNominaSAT($TipoNomina, $TablaName, $FechaGeneracion, $FechaInici
 				$TotalArchivos++;
 
 				fclose($fh);
-
-			
 
 			}while($row_srcSQL = $srcSQL->fetch_assoc());
 
