@@ -187,9 +187,11 @@ $query_srcSQL = "CREATE TABLE `$TablaName` (
     
     exec("zip -P sat2015 -j -r ".$zippath.$zipname." \"".$zippath.$carpeta."/\"");
     
-    echo '<br>########################## --------------------------------- ###############################################<br>';
-    echo "zip -P sat2015 -j -r ".$zippath.$zipname." \"".$zippath.$carpeta."/\"";
+    echo '<br>############################################### ------------------ Archivo ZIP ------------------ ###############################################<br>';
+    echo "<a href='scriptSAT/archivos-layouts/$zipname'>Descargar ZIP</a>";
+    //echo "zip -P sat2015 -j -r ".$zippath.$zipname." \"".$zippath.$carpeta."/\"";
 
+    /*
     $zip_status = $zip->open($zippath.$zipname);
 
     if ($zip_status === true) {
@@ -206,4 +208,5 @@ $query_srcSQL = "CREATE TABLE `$TablaName` (
     }else{
         echo 'Archivo zip no valido';
     }
+    */
 ?>
