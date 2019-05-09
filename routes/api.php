@@ -15,6 +15,4 @@ use Illuminate\Http\Request;
 
 Route::post('/importar_nomina', 'ImportarController@parseNomina');
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::post('/homologar_formato', 'HomologarFormatosController@cargarDBF');

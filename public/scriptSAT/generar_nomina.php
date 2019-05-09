@@ -9,7 +9,7 @@ $public_path = '/usr/local/sistemas/apis/nomina/public/';
 $Dias = $_POST['dias'];
 $Periodicidad = $_POST['periodicidad'];
 $TablaName = $_POST['nombre_nomina'];
-$TipoNomina = $_POST['tipo_nomina'];
+$TipoNomina = "01";
 
 $query_srcSQL = "DROP TABLE IF EXISTS $TablaName";
 
@@ -163,7 +163,7 @@ $query_srcSQL = "CREATE TABLE `$TablaName` (
                 ESCAPED BY '\"' 
                 LINES TERMINATED BY '\\n'
                 IGNORE 1 LINES
-                SET mmFolio = null, RAMA = 'RAMA MEDICA' 
+                SET mmFolio = null, RAMA = 'SALUD' 
                 ", addslashes($csv));
 
             $mysqli->query($query) or die($mysqli->error.__LINE__);
@@ -185,7 +185,7 @@ $query_srcSQL = "CREATE TABLE `$TablaName` (
     $zippath = $storage_path."archivos-layouts/";
     $zipname = "Layouts.SAT.".$carpeta.".zip";
     
-    exec("zip -P sat2015 -j -r ".$zippath.$zipname." \"".$zippath.$carpeta."/\"");
+    exec("zip -P sat2015 -r ".$zippath.$zipname." \"".$zippath.$carpeta."/\"");
     
     echo '<br>############################################### ------------------ Archivo ZIP ------------------ ###############################################<br>';
     echo "<a href='archivos-layouts/$zipname'>Descargar ZIP</a>";
