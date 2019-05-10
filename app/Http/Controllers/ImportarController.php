@@ -49,7 +49,9 @@ class ImportarController extends Controller
                     ],
                     'identificadores_acreditado'=>[
                         'RFACRE'=>'ACREDITADO',
-                        'RFNACRE'=>'NO_ACREDITADO'
+                        'RFNACRE'=>'NO_ACREDITADO',
+                        'SP49ACRE'=>'ACREDITADO',
+                        'SP49NACRE'=>'NO_ACREDITADO'
                     ]
                 ],
                 'bety' =>   [
