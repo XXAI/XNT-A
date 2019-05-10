@@ -2,8 +2,8 @@
 
 //$Folio = $row_srcSQL["mmFolio"];
 //
-
-$Periodicidad = (strlen($row_srcSQL["Periodicidad"])>0) ? $row_srcSQL["Periodicidad"] :"04";
+$dato_periodicidad = trim($row_srcSQL["Periodicidad"]);
+$Periodicidad = (strlen($dato_periodicidad)>0) ? $dato_periodicidad :"04";
 
 if($row_srcSQL["TURNO"]=="VESPERTINO")
 	$Turno = "02"; //Nocturno
