@@ -61,7 +61,7 @@ $Nombre = str_replace("$", "", $Nombre);
 
 $TotalOtrosPagos=$row_srcSQL["OTROS_PAGOS"] ? $row_srcSQL["OTROS_PAGOS"] : 0;
 
-$Dato="DC|3.3|NOM".$TipoNomina."|".$Folio."|".date("Y-m-d")."T".$HoraGeneracion."|99|".number_format($TotalPercepciones+$TotalOtrosPagos,2,'.','')."|".number_format($TotalDeducciones,2,".","")."|MXN||".number_format(($TotalPercepciones+$TotalOtrosPagos)-$TotalDeducciones,2,".","")."|N|PUE|29010"."\r";
+$Dato="DC|3.3|NOM".$TipoNomina."|".$Folio."|".$FechaHoraGeneracion."|99|".number_format($TotalPercepciones+$TotalOtrosPagos,2,'.','')."|".number_format($TotalDeducciones,2,".","")."|MXN||".number_format(($TotalPercepciones+$TotalOtrosPagos)-$TotalDeducciones,2,".","")."|N|PUE|29010"."\r";
 	fwrite($fh,$Dato.PHP_EOL);
 
 	$Dato="EM|ISA961203QN5|INSTITUTO DE SALUD"."\r";

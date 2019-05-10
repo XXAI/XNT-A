@@ -46,6 +46,8 @@ function GenerarNominaSAT($TipoNomina, $TablaName, $FechaGeneracion, $FechaInici
 			$Carpeta = "";
 			
 			$carpeta_grupo = $TablaName;
+
+			$FechaHoraGeneracion = date("Y-m-d")."T".date("H:i:s");
 	
 			do{
 
@@ -58,9 +60,7 @@ function GenerarNominaSAT($TipoNomina, $TablaName, $FechaGeneracion, $FechaInici
 				$FechaFinal = substr($row_srcSQL["AL"],0,4)."-".substr($row_srcSQL["AL"],4,2)."-".substr($row_srcSQL["AL"],6,2); 
 
 				$FechaPago = substr($row_srcSQL["FechaPago"],0,4)."-".substr($row_srcSQL["FechaPago"],4,2)."-".substr($row_srcSQL["FechaPago"],6,2); 
-
-
-
+				
 				if($Carpeta != 'archivos-layouts/'. $carpeta_grupo . '/' . $row_srcSQL["NombreNomina"])
 				{
 					$Carpeta = 'archivos-layouts/'. $carpeta_grupo . '/' . $row_srcSQL["NombreNomina"];
@@ -82,9 +82,8 @@ function GenerarNominaSAT($TipoNomina, $TablaName, $FechaGeneracion, $FechaInici
 				$filepath = $Carpeta."/".$row_srcSQL["mmFolio"]."_".$row_srcSQL["CURP"].".txt";
 				$fh = fopen($filepath,"w");
 				
-				$HoraGeneracion = date("H:i:s", mktime(0, 0, $Segundo, substr($FechaGeneracion,5,2), substr($FechaGeneracion,8,2), substr($FechaGeneracion,0,4)));
+				//$HoraGeneracion = date("H:i:s", mktime(0, 0, $Segundo, substr($FechaGeneracion,5,2), substr($FechaGeneracion,8,2), substr($FechaGeneracion,0,4)));
 				
-               
 				include("funciones_sat3.3v2_layout.php");
 
 				$Segundo += 1;
