@@ -4,7 +4,6 @@ set_time_limit(0);
 
 function calcular_semanas($FechaPago, $FechaIngreso)
 {	
-	
 	//echo date_format($date, 'Y-m-d');
 	$datetime1 = new DateTime($FechaIngreso);
 	//$datetime1 = DateTime::createFromFormat('d/m/Y',$FechaIngreso);
@@ -32,9 +31,6 @@ function GenerarNominaSAT($TipoNomina, $TablaName, $FechaGeneracion, $FechaInici
 			$totalRows_srcSQL = $srcSQL->num_rows;
 
 			//print_r($row_srcSQL);
-
-
-			
 
 			$TotalArchivos=0;
 
@@ -93,7 +89,6 @@ function GenerarNominaSAT($TipoNomina, $TablaName, $FechaGeneracion, $FechaInici
 
 				$Segundo += 1;
 				
-
 				$TotalArchivos++;
 
 				fclose($fh);

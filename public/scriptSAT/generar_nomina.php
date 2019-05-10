@@ -3,8 +3,6 @@ require_once("Connections/connSAT.php");
 require_once 'funciones_sat3.3v2.php';
 set_time_limit(0);
 
-$public_path = '/usr/local/sistemas/apis/nomina/public/';
-//$public_path = 'C:/laragon/www/reportes-nomina/public/';
 
 $Dias = $_POST['dias'];
 $Periodicidad = $_POST['periodicidad'];
@@ -22,7 +20,7 @@ $query_srcSQL = "CREATE TABLE `$TablaName` (
     `CURP` text DEFAULT NULL,
     `NOMBRE` text DEFAULT NULL,
     `TURNO` text DEFAULT NULL,
-    `FECHA_INGRESO` date DEFAULT NULL,
+    `FECHA_INGRESO` text DEFAULT NULL,
     `PUESTO` text DEFAULT NULL,
     `CLUES` text DEFAULT NULL,
     `NUM_EMP` text DEFAULT NULL,
@@ -149,6 +147,19 @@ $query_srcSQL = "CREATE TABLE `$TablaName` (
             } else {
                 echo "¡Posible ataque de subida de ficheros!<br>\n";
             }
+
+            $batchcount=0;
+            /**** Conteo de columnas en el csv */
+            while ($line = fgetcsv(fopen($csv,'r'))){
+                $numcols = count($line);
+                if ($numcols != 99) {
+                    echo '===================== ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR =====================  <br>';
+                    echo "Error: el numero de columnas en el csv es incorrecto, $numcols. En linea ".++$batchcount.". <br>";
+                    die;
+                    break;
+                }
+                break;
+            }
             
             $mysqli->begin_transaction();
 
@@ -185,7 +196,8 @@ $query_srcSQL = "CREATE TABLE `$TablaName` (
     $zippath = $storage_path."archivos-layouts/";
     $zipname = "Layouts.SAT.".$carpeta.".zip";
     
-    exec("zip -P sat2015 -r ".$zippath.$zipname." \"".$zippath.$carpeta."/\"");
+    chdir($zippath);
+    exec("zip -P sat2015 -r ".$zipname." \"".$carpeta."/\"");
     
     echo '<br>############################################### ------------------ Archivo ZIP ------------------ ###############################################<br>';
     echo "<a href='archivos-layouts/$zipname'>Descargar ZIP</a>";

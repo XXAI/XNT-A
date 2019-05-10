@@ -14,12 +14,12 @@ else if($row_srcSQL["TURNO"]=="OTRO TURNO")
 else 
 	$Turno = "03"; //Mixto 	             
 
-$NumSemanasLaboradas = calcular_semanas($FechaFinal, $row_srcSQL["FECHA_INGRESO"]);
 
 
 $FechaIngreso = substr($row_srcSQL["FECHA_INGRESO"],0,4)."-".substr($row_srcSQL["FECHA_INGRESO"],4,2)."-".substr($row_srcSQL["FECHA_INGRESO"],6,2);
 
-
+$NumSemanasLaboradas = calcular_semanas($FechaFinal, $FechaIngreso);
+//$NumSemanasLaboradas = calcular_semanas($FechaFinal, $row_srcSQL["FECHA_INGRESO"]);
 
 $TotalPercepciones = $row_srcSQL["TotalPercepciones"];
 $TotalDeducciones = $row_srcSQL["TotalDeducciones"];
