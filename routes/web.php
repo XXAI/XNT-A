@@ -15,6 +15,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/importar', function () {
+    return view('importardbf');
+});
+
+
 
 Route::get('/homologar_formatos', function () {
     return view('homologar_formatos');

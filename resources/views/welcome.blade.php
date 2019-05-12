@@ -17,7 +17,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col">
-                        <form id="formulario_nomina" action="/api/importar_nomina" target="_blank" method="post" enctype="multipart/form-data" >
+                        <form id="formulario_nomina" action="api/importar_nomina" target="_blank" method="post" enctype="multipart/form-data" >
                             <div class="form-row">
                                 <div class="form-group col-4"> <label>Tipo de año</label> <input class="form-control" type="text" name="tipo_anio" value="(A/C)"/> </div>
                                 <div class="form-group col-4"> <label>Quincena</label> <input class="form-control" type="text" name="quincena" value="01"/> </div>
@@ -39,6 +39,7 @@
                                     <option value='mandos_medios' >  Mandos Medios  </option>
                                     <option value='pac' >            PAC            </option>
                                     <option value='san_agustin' >    San Agustin    </option>
+                                    <option value='caravanas' >      Caravanas    </option>
                                 </select>
                             </div>
                             <div class="form-group"> 
@@ -46,7 +47,7 @@
                                 <small id="dbf_ayuda" class="form-text text-muted">Para las nominas de Homologados, Mandos Medios, PAC y San Agustin no es necesario cargar el archivo DBF</small>
                             </div>
                             <div class="form-row">
-                                <div class="form-group col-6"> <label>Archivo TRA (ordinario)</label>         <input class="form-control-file" type="file" name="archivo_tra" accept=".tra"/>       </div>
+                                <div class="form-group col-6"> <label>Archivo TRA (ordinario)</label>         <input class="form-control-file" type="file" name="archivo_tra" accept=".tra"/>      <a href='importar'>Convertir dbf a tra</a> </div>
                                 <div class="form-group col-6"> <label>Archivo TRA (extraordinario)</label>    <input class="form-control-file" type="file" name="archivo_tra_ex" accept=".tra"/>    </div>
                             </div>
                             <hr/>
