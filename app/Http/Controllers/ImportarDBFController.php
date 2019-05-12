@@ -88,23 +88,23 @@ class ImportarDBFController extends Controller
                     else if($key == 'asbruto42')
                     {
                         if($registro_dbf['asbruto42'] > 0)
-                           $registro_tar .= $registro_dbf['rfc']."|".$registro_dbf['cr']."|".$registro_dbf['numcheq']."|1|42|".$registro_dbf['asbruto42']."|".substr($registro_dbf['ppagoi'],0,-4)."|00|00|||".$registro_dbf['nomprod']."|".$contador."|\\n";
+                           $registro_tar .= $registro_dbf['rfc']."|".$registro_dbf['cr']."|".$registro_dbf['numcheq']."|1|42|".$registro_dbf['asbruto42']."|".substr($registro_dbf['ppagoi'],0,-4)."|00|00|||".$registro_dbf['nomprod']."|".$contador."|\\\n";
                     }else if($key == 'aga55')
                     {
                         if($registro_dbf['aga55'] > 0)
-                            $registro_tar .= $registro_dbf['rfc']."|".$registro_dbf['cr']."|".$registro_dbf['numcheq']."|1|55|".$registro_dbf['aga55']."|".substr($registro_dbf['ppagoi'],0,-4)."|00|AG|||".$registro_dbf['nomprod']."|".$contador."|\\n";
+                            $registro_tar .= $registro_dbf['rfc']."|".$registro_dbf['cr']."|".$registro_dbf['numcheq']."|1|55|".$registro_dbf['aga55']."|".substr($registro_dbf['ppagoi'],0,-4)."|00|AG|||".$registro_dbf['nomprod']."|".$contador."|\\\n";
                     }else if($key == 'isr')
                     {
                         if($registro_dbf['isr'] > 0)
-                            $registro_tar .= $registro_dbf['rfc']."|".$registro_dbf['cr']."|".$registro_dbf['numcheq']."|2|01|".$registro_dbf['isr']."|".substr($registro_dbf['ppagoi'],0,-4)."|00|00|||".$registro_dbf['nomprod']."|".$contador."|\\n";
+                            $registro_tar .= $registro_dbf['rfc']."|".$registro_dbf['cr']."|".$registro_dbf['numcheq']."|2|01|".$registro_dbf['isr']."|".substr($registro_dbf['ppagoi'],0,-4)."|00|00|||".$registro_dbf['nomprod']."|".$contador."|\\\n";
                     }else if($key == 'pension')
                     {
                         if($registro_dbf['pension'] > 0)
-                            $registro_tar .= $registro_dbf['rfc']."|".$registro_dbf['cr']."|".$registro_dbf['numcheq']."|2|62|".$registro_dbf['pension']."|".substr($registro_dbf['ppagoi'],0,-4)."|00|01|||".$registro_dbf['nomprod']."|".$contador."|\\n";
+                            $registro_tar .= $registro_dbf['rfc']."|".$registro_dbf['cr']."|".$registro_dbf['numcheq']."|2|62|".$registro_dbf['pension']."|".substr($registro_dbf['ppagoi'],0,-4)."|00|01|||".$registro_dbf['nomprod']."|".$contador."|\\\n";
                     }else if($key == 'padit62')
                     {
                         if($registro_dbf['padit62'] > 0)
-                            $registro_tar .= $registro_dbf['rfc']."|".$registro_dbf['cr']."|".$registro_dbf['numcheq']."|2|62|".$registro_dbf['padit62']."|".substr($registro_dbf['ppagoi'],0,-4)."|00|02|||".$registro_dbf['nomprod']."|".$contador."\\n";
+                            $registro_tar .= $registro_dbf['rfc']."|".$registro_dbf['cr']."|".$registro_dbf['numcheq']."|2|62|".$registro_dbf['padit62']."|".substr($registro_dbf['ppagoi'],0,-4)."|00|02|||".$registro_dbf['nomprod']."|".$contador."\\\n";
                     }
                 }
                 $datos_dbf[] = $registro_dbf;
