@@ -95,7 +95,11 @@ $Dato="DC|3.3|NOM".$TipoNomina."|".$Folio."|".$FechaHoraGeneracion."|99|".number
         $Dato="CN|84111505|1|ACT|Pago de nómina|".number_format($TotalPercepciones+$TotalOtrosPagos,2,'.','')."|".number_format($TotalPercepciones+$TotalOtrosPagos,2,'.','')."|\r";
         fwrite($fh,$Dato.PHP_EOL);
     }
-	
+    
+    if($row_srcSQL["Observaciones"] && trim($row_srcSQL["Observaciones"]) != '' ){
+        $Dato="OP|".$row_srcSQL["Observaciones"]."\r";
+        fwrite($fh,$Dato.PHP_EOL);
+    }
     
     if(($PercepcionGravado+$PercepcionNoGravado) >0)
     {

@@ -5,6 +5,7 @@
 /public/scriptSAT/archivos-layouts/*
 /storage/*.key
 /storage/archivostra/*.tra
+/storage/archivoscsv_timbrado/*.Csv
 /vendor
 .env
 .phpunit.result.cache

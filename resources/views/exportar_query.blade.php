@@ -17,23 +17,17 @@
             <div class="container">
                 <div class="row">
                     <div class="col">
-                        <form id="formulario_nomina" action="{{url('api/homologar_formato')}}" target="_blank" method="post" enctype="multipart/form-data" >
+                        <form id="formulario_nomina" action="{{url('api/exportar_query_excel')}}" target="_blank" method="post" >
                             <div class="form-group"> 
-                                <label>Nomina</label> 
-                                <select name="identificador_nomina" class="form-control">
-                                    <option value='sin_id' selected="selected">Seleccione una opción </option>
-                                    <option value='FEDERAL' >       Federal       </option>
-                                </select>
+                                <label>Nombre Archivo:</label> 
+                                <input type="text" name="nombre_archivo" class="form-control">
                             </div>
                             <div class="form-group"> 
-                                <label>Archivo DBF</label>                     <input class="form-control-file" type="file" name="archivo_dbf" accept=".dbf"/>
+                                <label>Query:</label> 
+                                <textarea name="query" class="form-control" rows="10"></textarea>
                             </div>
-                            <hr/>
                             <div class="form-row">
-                                <div class="col-8"></div>
-                                <div class="col-2">
-                                    <button class="btn btn-default" type="reset">Limpiar Formulario</button>
-                                </div>
+                                <div class="col-10"></div>
                                 <div class="col-2">
                                     <button class="btn btn-primary" type="submit">Generar Excel</button>
                                 </div>

@@ -16,3 +16,7 @@ use Illuminate\Http\Request;
 Route::post('/importar_nomina', 'ImportarController@parseNomina');
 
 Route::post('/homologar_formato', 'HomologarFormatosController@cargarDBF');
+
+Route::post('/exportar_query_excel', 'ExportarQueriesController@exportarExcel');
+
+Route::post('/importar_archivo_csv','DatosTimbradoController@cargarArchivo');

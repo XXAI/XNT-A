@@ -19,3 +19,11 @@ Route::get('/', function () {
 Route::get('/homologar_formatos', function () {
     return view('homologar_formatos');
 });
+
+Route::get('/exportar_query', function(){
+    return view('exportar_query');
+});
+
+Route::get('/importar_archivo_csv', function(){
+    return view('importar_archivo_csv');
+});

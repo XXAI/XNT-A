@@ -9,6 +9,15 @@ $Periodicidad = $_POST['periodicidad'];
 $TablaName = $_POST['nombre_nomina'];
 $TipoNomina = "01";
 
+$archivo = $_FILES['archivo_csv'];
+
+$nombre_archivo = str_replace('.csv','',$archivo['name']);
+       
+if($nombre_archivo != $TablaName){
+    echo 'Error: el nombre del archivo no corresponde con el nombre de la nomina<br>';
+    die;
+}
+
 $query_srcSQL = "DROP TABLE IF EXISTS $TablaName";
 
 $srcSQL = $mysqli->query($query_srcSQL) or die($mysqli->error.__LINE__);
@@ -114,6 +123,7 @@ $query_srcSQL = "CREATE TABLE `$TablaName` (
     `FECHA_PAGO` int(11) DEFAULT NULL,
     `QNA` text DEFAULT NULL,
     `PERIODICIDAD` text DEFAULT NULL,
+    `OBSERVACIONES` varchar(255) DEFAULT NULL,
     `mmFolio` int(11) NOT NULL AUTO_INCREMENT,
     `RAMA` varchar(125) DEFAULT NULL,
     PRIMARY KEY (`mmFolio`)
@@ -122,8 +132,6 @@ $query_srcSQL = "CREATE TABLE `$TablaName` (
     $srcSQL = $mysqli->query($query_srcSQL) or die($mysqli->error.__LINE__);
 
     echo "Tabla creada con éxito.<br>\n";
-
-    $archivo = $_FILES['archivo_csv'];
 
     try{
         $finfo = finfo_open(FILEINFO_MIME_TYPE); 
@@ -152,7 +160,7 @@ $query_srcSQL = "CREATE TABLE `$TablaName` (
             /**** Conteo de columnas en el csv */
             while ($line = fgetcsv(fopen($csv,'r'))){
                 $numcols = count($line);
-                if ($numcols != 99) {
+                if ($numcols < 99 || $numcols > 100) {
                     echo '===================== ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR =====================  <br>';
                     echo "Error: el numero de columnas en el csv es incorrecto, $numcols. En linea ".++$batchcount.". <br>";
                     die;

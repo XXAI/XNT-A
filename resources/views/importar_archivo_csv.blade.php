@@ -12,30 +12,24 @@
     <body>
         <div>
             <div class="jumbotron">
-                <h1 class="display-8">Homologar Formatos de nomina</h1>
+                <h1 class="display-8">Importar Archivos CSV</h1>
             </div>
             <div class="container">
                 <div class="row">
                     <div class="col">
-                        <form id="formulario_nomina" action="{{url('api/homologar_formato')}}" target="_blank" method="post" enctype="multipart/form-data" >
+                        <form id="formulario_nomina" action="{{url('api/importar_archivo_csv')}}" target="_blank" method="post" enctype="multipart/form-data" >
+                            
                             <div class="form-group"> 
-                                <label>Nomina</label> 
-                                <select name="identificador_nomina" class="form-control">
-                                    <option value='sin_id' selected="selected">Seleccione una opción </option>
-                                    <option value='FEDERAL' >       Federal       </option>
-                                </select>
-                            </div>
-                            <div class="form-group"> 
-                                <label>Archivo DBF</label>                     <input class="form-control-file" type="file" name="archivo_dbf" accept=".dbf"/>
+                                <label>Archivo CSV</label>                     <input class="form-control-file" type="file" name="archivo_csv" accept=".csv"/>
                             </div>
                             <hr/>
                             <div class="form-row">
                                 <div class="col-8"></div>
                                 <div class="col-2">
-                                    <button class="btn btn-default" type="reset">Limpiar Formulario</button>
+                                    <button class="btn btn-default" type="reset">Limpiar</button>
                                 </div>
                                 <div class="col-2">
-                                    <button class="btn btn-primary" type="submit">Generar Excel</button>
+                                    <button class="btn btn-primary" type="submit">Enviar Archivo</button>
                                 </div>
                             </div>
                         </form>
