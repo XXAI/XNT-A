@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as HttpResponse;
+use Illuminate\Support\Facades\Storage;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
@@ -13,178 +14,112 @@ use TRA, DBF;
 
 use XBase\Table;
 
-class ImportarController extends Controller
+class ImportarDBFController extends Controller
 {
     /**
      * Parsea la nomina enviada por el cliente, y devuelve un archivo excel con diferentes pestañas
      */
-    public function parseNomina(Request $request){
+    public function parseDBF(Request $request){
         ini_set('memory_limit', '-1');
-
+       
         try{
-            
-            $identificadores = [
-                'lisandro' => [
-                    'clave'=>'LISANDRO',
-                    'usa_dbf'=>true,
-                    'columnas_dbf'=>[
-                        'rfc'=>'rfc',
-                        'programa'=>'programa',
-                        'acreditado'=>'sinfuente',
-                        'nom_prod'=>'nomprod'
-                    ],
-                    'identificadores_acreditado'=>[
-                        'ACRED'=>'ACREDITADO', 
-                        'NOACRED'=>'NO_ACREDITADO'
-                    ]
-                ],
-                'walter' =>   [
-                    'clave'=>'WALTER', 
-                    'usa_dbf'=>true,
-                    'columnas_dbf'=>[
-                        'rfc'=>'rfc',
-                        'programa'=>'programa',
-                        'acreditado'=>'ban',      
-                        'nom_prod'=>'nomprod'
-                    ],
-                    'identificadores_acreditado'=>[
-                        'RFACRE'=>'ACREDITADO',
-                        'RFNACRE'=>'NO_ACREDITADO',
-                        'SP49ACRE'=>'ACREDITADO',
-                        'SP49NACRE'=>'NO_ACREDITADO'
-                    ]
-                ],
-                'bety' =>   [
-                    'clave'=>'BETY',  
-                    'usa_dbf'=>true,
-                    'columnas_dbf'=>[
-                        'rfc'=>'rfc',
-                        'programa'=>'programa',
-                        'acreditado'=>'num',      
-                        'nom_prod'=>'nomprod'
-                    ],
-                    'identificadores_acreditado'=>[]
-                ],
-                'homologados' =>   [
-                    'clave'=>'HOMOLOGADOS', 
-                    'usa_dbf'=>false,
-                    'titulo' =>'HOMOLOGADOS'
-                ],
-                'mandos_medios' =>   [
-                    'clave'=>'MANDOS_MEDIOS', 
-                    'usa_dbf'=>false,
-                    'titulo' =>'MANDOS MEDIOS'
-                ],
-                'pac' =>   [
-                    'clave'=>'PAC', 
-                    'usa_dbf'=>false,
-                    'titulo' =>'PAC'
-                ],
-                'san_agustin' =>   [
-                    'clave'=>'SAN_AGUSTIN', 
-                    'usa_dbf'=>false,
-                    'titulo' =>'UNIDAD DE ATENCIÓN A LA SALUD MENTAL SAN AGUSTÍN'
-                ],
-                'caravanas' =>   [
-                    'clave'=>'CARAVANAS', 
-                    'usa_dbf'=>false,
-                    'titulo' =>'CARAVANAS'
-                ]
-            ];
-            
-            if(!isset($identificadores[$request->input('identificador_nomina')])){
-                return response()->json(['error'=>'Identificador de nomina no encontrado'], HttpResponse::HTTP_CONFLICT);
-            }
-            
-            $identificadores_nomina = $identificadores[$request->input('identificador_nomina')];
+            $archivo_dbf = $request->file('archivo_dbf');
+            if ($archivo_dbf && $archivo_dbf->isValid()){
+                $datos_carga_dbf = $this->cargarDatosDBF($archivo_dbf);
 
-            $datos_archivo = [
-                'titulo' => ($identificadores_nomina['usa_dbf'])?'':$identificadores_nomina['titulo'],
-                'tipo_anio' => $request->input('tipo_anio'),
-                'quincena' => $request->input('quincena'),
-                'anio' => $request->input('anio'),
-                'nombre_archivo' => $request->input('nombre_archivo'),
-                'unidad_responsable' => $request->input('unidad_responsable')
-            ];
-
-            $datos_carga_dbf = [];
-            $datos_carga_tra = [];
-
-            \App\DBF::where('nomina',$identificadores_nomina['clave'])->delete();
-            if($identificadores_nomina['usa_dbf']){
-                $archivo_dbf = $request->file('archivo_dbf');
-                if ($archivo_dbf && $archivo_dbf->isValid()){
-                    $datos_carga_dbf = $this->cargarDatosDBF($archivo_dbf,$identificadores_nomina['columnas_dbf'],$identificadores_nomina['clave'],$identificadores_nomina['identificadores_acreditado']);
-
-                    if(!$datos_carga_dbf['status']){
-                        return response()->json($datos_carga_dbf, HttpResponse::HTTP_CONFLICT);
-                    }
-                }else{
-                    return response()->json(['error'=>'Archivo DBF no valido'], HttpResponse::HTTP_CONFLICT);
+                if($datos_carga_dbf['status']){
+                    $public_path = public_path();
+                    return Storage::download('archivo_tra.tra');
                 }
+            }else{
+                return response()->json(['error'=>'Archivo DBF no valido'], HttpResponse::HTTP_CONFLICT);
             }
-
-            \App\TRA::where('nomina',$identificadores_nomina['clave'])->delete();
-            $input_archivos_tra = ['archivo_tra','archivo_tra_ex'];
-            for($i = 0; $i < count($input_archivos_tra); $i++){
-                $archivo_tra = $request->file($input_archivos_tra[$i]);
-                if($archivo_tra){
-                    if ($archivo_tra->isValid()){
-                        $tipo_nomina = 'ordinaria';
-                        if($input_archivos_tra[$i] == 'archivo_tra_ex'){
-                            $tipo_nomina = 'extraordinaria';
-                        }
-                        $datos_carga_tra[$input_archivos_tra[$i]] = $this->cargarDatosTRA($archivo_tra,$identificadores_nomina['clave'],$tipo_nomina);
-    
-                        if(!$datos_carga_tra[$input_archivos_tra[$i]]['status']){
-                            return response()->json($datos_carga_tra, HttpResponse::HTTP_CONFLICT);
-                        }
-                    }else{
-                        return response()->json(['error'=>'Archivo TRA no valido'], HttpResponse::HTTP_CONFLICT);
-                    }
-                }
-            }
-            
-            //return response()->json(['data' => 'onegaishimasu'], HttpResponse::HTTP_OK);
-            return self::generarExcel($identificadores_nomina['clave'],$datos_archivo);
+           
         }catch(\Exception $e){
             return response()->json(['error' => $e->getMessage(),'line'=>$e->getLine()], HttpResponse::HTTP_CONFLICT);
         }
     }
 
-    public function cargarDatosDBF($archivo,$columnas_dbf,$identificador_nomina,$identificadores_acreditado){
+    public function cargarDatosDBF($archivo){
         //ini_set('memory_limit', '-1');
         try{
             $datos_dbf = [];
 
+            $columnas_dbf = [
+                'rfc'=>'rfc',
+                'cr'=> 'cr',
+                'ppagoi' => 'ppagoi',
+                'sueldo' => 'sueldo',
+                'numcheq' => 'numcheq',
+                'numctrol'=> 'numctrol',
+                'nomprod' => 'nomprod',
+                'asbruto42' => 'asbruto42',
+                'aga55' => 'aga55',
+                'isr' => 'isr',
+                'pension' => 'pension',
+                'padit62' => 'padit62'
+            ];
+
+            $estructura_tar = 
+            [
+                'sueldo' => 'sueldo',
+                'nomprod' => 'nomprod',
+                'asbruto42' => 'asbruto42',
+                'aga55' => 'aga55',
+                'isr' => 'isr',
+                'pension' => 'pension',
+                'padit62' => 'padit62'
+            ];
             $table = new Table($archivo,array_values($columnas_dbf),'utf-8');
 
             DB::beginTransaction();
+            $registro_tar = '';
+            
+            $contador = 1;
             while($record = $table->nextRecord()){
                 $registro_dbf = [];
+                
                 foreach ($columnas_dbf as $key => $value) {
-                    if($key == 'acreditado'){
-                        if(isset($identificadores_acreditado[$record->getString($value)])){
-                            $registro_dbf[$key] = $identificadores_acreditado[$record->getString($value)];
-                        }else{
-                            $registro_dbf[$key] = '';
-                        }
-                    }else{
-                        $registro_dbf[$key] = $record->getString($value);
+                    $registro_dbf[$key] = $record->getString($value);
+                }
+                foreach ($estructura_tar as $key => $value) {
+                    if($key == 'sueldo')
+                        $registro_tar .= $registro_dbf['rfc']."|".$registro_dbf['cr']."|".$registro_dbf['numcheq']."|1|02|".$registro_dbf['sueldo']."|".substr($registro_dbf['ppagoi'],0,-4)."|00|00|||".$registro_dbf['nomprod']."|".$contador."| \\\n";
+                    else if($key == 'asbruto42')
+                    {
+                        if($registro_dbf['asbruto42'] > 0)
+                           $registro_tar .= $registro_dbf['rfc']."|".$registro_dbf['cr']."|".$registro_dbf['numcheq']."|1|42|".$registro_dbf['asbruto42']."|".substr($registro_dbf['ppagoi'],0,-4)."|00|00|||".$registro_dbf['nomprod']."|".$contador."|\\\n";
+                    }else if($key == 'aga55')
+                    {
+                        if($registro_dbf['aga55'] > 0)
+                            $registro_tar .= $registro_dbf['rfc']."|".$registro_dbf['cr']."|".$registro_dbf['numcheq']."|1|55|".$registro_dbf['aga55']."|".substr($registro_dbf['ppagoi'],0,-4)."|00|AG|||".$registro_dbf['nomprod']."|".$contador."|\\\n";
+                    }else if($key == 'isr')
+                    {
+                        if($registro_dbf['isr'] > 0)
+                            $registro_tar .= $registro_dbf['rfc']."|".$registro_dbf['cr']."|".$registro_dbf['numcheq']."|2|01|".$registro_dbf['isr']."|".substr($registro_dbf['ppagoi'],0,-4)."|00|00|||".$registro_dbf['nomprod']."|".$contador."|\\\n";
+                    }else if($key == 'pension')
+                    {
+                        if($registro_dbf['pension'] > 0)
+                            $registro_tar .= $registro_dbf['rfc']."|".$registro_dbf['cr']."|".$registro_dbf['numcheq']."|2|62|".$registro_dbf['pension']."|".substr($registro_dbf['ppagoi'],0,-4)."|00|01|||".$registro_dbf['nomprod']."|".$contador."|\\\n";
+                    }else if($key == 'padit62')
+                    {
+                        if($registro_dbf['padit62'] > 0)
+                            $registro_tar .= $registro_dbf['rfc']."|".$registro_dbf['cr']."|".$registro_dbf['numcheq']."|2|62|".$registro_dbf['padit62']."|".substr($registro_dbf['ppagoi'],0,-4)."|00|02|||".$registro_dbf['nomprod']."|".$contador."\\\n";
                     }
                 }
-                $registro_dbf['nomina'] = $identificador_nomina;
-
                 $datos_dbf[] = $registro_dbf;
+                $contador++;
             }
-
-            \App\DBF::insert($datos_dbf);
-
+            \Storage::disk('local')->put("archivo_tra.tra",  $registro_tar);
             DB::commit();
 
-            $registros_tabla = \App\DBF::where('nomina',$identificador_nomina)->count();
+            //print_r($datos_dbf);
+            /*\App\DBF::insert($datos_dbf);
 
-            return ['status'=>true, 'total_reistros_dbf'=>$table->getRecordCount(), 'total_regitros_tabla'=>$registros_tabla];
+            
+            //$registros_tabla = \App\DBF::where('nomina',$identificador_nomina)->count();
+            */    
+            return ['status'=>true, 'total_reistros_dbf'=>$table->getRecordCount()];
         }catch(\Exception $e){
             DB::rollback();
             return ['status'=>false, 'error' => $e->getMessage(), 'linea'=>$e->getLine()];
