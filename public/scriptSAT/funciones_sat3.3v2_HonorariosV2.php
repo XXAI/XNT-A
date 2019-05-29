@@ -100,13 +100,13 @@ function GenerarNominaSAT($TipoNomina, $TablaName, $FechaGeneracion, $FechaInici
 			
 
 			}while($row_srcSQL = $srcSQL->fetch_assoc());
-
-			
 			
 
 			echo "Listo: ".$Carpeta." [".$TotalArchivos."]<br>";
 
-			return $Folio;
+			echo "Folio: " . $Folio;
+
+			return $carpeta_grupo;
 
 }
 
