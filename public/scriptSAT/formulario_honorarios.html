@@ -1,0 +1,15 @@
+<html>
+<head></head>
+<body>
+    <form target="_blank" action="generar_nomina_honorarios.php" method="post" enctype="multipart/form-data">
+        <label>Dias </label><input type="text" name="dias" value="15"/> <br>
+        <label>Periodicidad </label> <input type="text" name="periodicidad" value="QUINCENAL"/> <br>
+        <label>Nombre Nomina </label> <input type="text" name="nombre_nomina" value=""/> <br>
+        <hr>
+        <input type="file" name="archivo_csv" accept=".csv"/>
+        <hr>
+        <button type="reset">Limpiar</button>
+        <button type="submit">Enviar</button>
+    </form>
+</body>
+</html>
