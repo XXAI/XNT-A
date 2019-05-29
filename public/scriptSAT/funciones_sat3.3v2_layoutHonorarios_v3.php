@@ -133,14 +133,11 @@ $Dato="DC|3.3|NOM".$TipoNomina."|".$Folio."|".$FechaHoraGeneracion."|99|".number
 	else
 		$TotalDeduccionesMenosISR="";
 
-
+	/*
 	if(is_numeric($TotalDeduccionesMenosISR))
 	{
-
-
-
-		/*$Dato="NPD|040|00000|Ingresos Propios|0|0"."\r";
-		fwrite($fh,$Dato.PHP_EOL);*/
+		//$Dato="NPD|040|00000|Ingresos Propios|0|0"."\r";
+		//fwrite($fh,$Dato.PHP_EOL);
 		if($ISR>0)
 		{
 			$Dato="CND|".$TotalDeduccionesMenosISR."|".number_format($ISR,2,'.','')."\r";
@@ -150,9 +147,18 @@ $Dato="DC|3.3|NOM".$TipoNomina."|".$Folio."|".$FechaHoraGeneracion."|99|".number
 			$Dato="CND|".$TotalDeduccionesMenosISR."|\r";
 		fwrite($fh,$Dato.PHP_EOL);
 		}
-	
+	}
+	*/
+
+	if($row_srcSQL["D1700"]){
+        $Dato="NDD|020|D1700|FALTAS|".number_format($row_srcSQL["D1700"],2,".","")."\r";
+        fwrite($fh,$Dato.PHP_EOL);
 	}
 
+	if($row_srcSQL["D6200"]){
+        $Dato="NDD|007|D6200|PENSIÓN ALIMENTICIA|".number_format($row_srcSQL["D6200"],2,".","")."\r";
+        fwrite($fh,$Dato.PHP_EOL);
+	}
 
     /*
 	if((floor(($TotalDeducciones-$ISR-$row_srcSQL["AportacionRetiro"]-$row_srcSQL["D5800"]-$row_srcSQL["SegSocial"]) * 100) / 100)>0.00)
