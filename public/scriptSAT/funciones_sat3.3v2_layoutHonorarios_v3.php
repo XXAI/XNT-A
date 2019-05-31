@@ -133,7 +133,6 @@ $Dato="DC|3.3|NOM".$TipoNomina."|".$Folio."|".$FechaHoraGeneracion."|99|".number
 	else
 		$TotalDeduccionesMenosISR="";
 
-	/*
 	if(is_numeric($TotalDeduccionesMenosISR))
 	{
 		//$Dato="NPD|040|00000|Ingresos Propios|0|0"."\r";
@@ -148,7 +147,6 @@ $Dato="DC|3.3|NOM".$TipoNomina."|".$Folio."|".$FechaHoraGeneracion."|99|".number
 		fwrite($fh,$Dato.PHP_EOL);
 		}
 	}
-	*/
 
 	if($row_srcSQL["D1700"]){
         $Dato="NDD|020|D1700|FALTAS|".number_format($row_srcSQL["D1700"],2,".","")."\r";
