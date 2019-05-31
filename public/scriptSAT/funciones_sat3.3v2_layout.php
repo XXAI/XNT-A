@@ -542,7 +542,7 @@ $Dato="DC|3.3|NOM".$TipoNomina."|".$Folio."|".$FechaHoraGeneracion."|99|".number
     }
 
 	
-	if($row_srcSQL["OTROS_PAGOS"]){
+	if($row_srcSQL["OTROS_PAGOS"] > 0){
     $Dato="NOP|999|19999|Otros Pagos|".number_format($row_srcSQL["OTROS_PAGOS"],2,".","")."||||\r";
     fwrite($fh,$Dato.PHP_EOL);
     }
