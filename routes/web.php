@@ -19,8 +19,6 @@ Route::get('/importar', function () {
     return view('importardbf');
 });
 
-
-
 Route::get('/homologar_formatos', function () {
     return view('homologar_formatos');
 });
@@ -31,4 +29,8 @@ Route::get('/exportar_query', function(){
 
 Route::get('/importar_archivo_csv', function(){
     return view('importar_archivo_csv');
+});
+
+Route::get('/dividir_timbrado', function () {
+    return view('dividir_xmls');
 });

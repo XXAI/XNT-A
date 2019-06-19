@@ -16,10 +16,9 @@ class DividirXMLController extends Controller{
     
     public function dividirXML(Request $request){
         try{
-            //C:/Users/Harima/Documents/Timbrado Nomina/Seguro Popular/Timbrados QNA01/Archivos Timbrados XML/global
-            //C:/Users/Harima/Documents/Timbrado Nomina/Caravanas Cancelacion y Retimbrado/TIMBRADO CARAVANAS/TIMBRADO CORRECTO COMPLETO
-            $ruta_principal = 'C:/pruebas/';
-            $tabla_nomina = 'QNA01_19_2018_CARAVANAS';
+            //$ruta_principal = env('PATH_DIVIDIR_XMLS'); //'C:/pruebas/';
+            $ruta_principal = storage_path().'/division_xmls/';
+            $tabla_nomina = $request->get('nombre_tabla');
 
             /*
                 La división de las carpetas se puede especificar como:
@@ -28,18 +27,29 @@ class DividirXMLController extends Controller{
                     C-X:   En carpetas por Clues -> archivos Xml
                     N-X:   En carpetas por Nombre de Nomina -> archivos Xml
             */
-            $orden_carpetas = 'C-X';
+            $orden_carpetas = $request->get('orden_carpetas');
+
+            $ruta_nomina = $ruta_principal.'/'.$tabla_nomina.'/';
+            mkdir($ruta_nomina, 0777, true);
+            
+            $archivo_zip = $request->file('archivo_zip');
+            $upload_success = $archivo_zip->move($ruta_nomina, $tabla_nomina."-xmls.zip");
+            $zip = $ruta_nomina . $tabla_nomina."-xmls.zip";
+
+            chdir($ruta_nomina);
+            //exec("zip -P sat2015 -r ".$zipname." \"".$carpeta."/\"");
+            exec("unzip ".$tabla_nomina."-xmls.zip");
 
             $rfc_clues = \DB::table($tabla_nomina)->selectRaw("CONCAT(NOMBRE_NOMINA,'_',RFC) as LLAVE, CLUES")->pluck('CLUES','LLAVE');
 
             //$files = glob( $ruta_principal.'xmls/*' . '*', GLOB_MARK ); //GLOB_MARK adds a slash to directories returned
-            $nominas = glob( $ruta_principal.'xmls/*' . '*', GLOB_MARK ); //GLOB_MARK adds a slash to directories returned
+            $nominas = glob( $ruta_nomina.'xmls/*' . '*', GLOB_MARK ); //GLOB_MARK adds a slash to directories returned
             
             $Carpeta = '';
             $contador = 0;
 
             foreach($nominas as $nomina){
-                $nombre_nomina = str_replace( $ruta_principal.'xmls/','',$nomina);
+                $nombre_nomina = str_replace( $ruta_nomina.'xmls/','',$nomina);
                 $nombre_nomina = str_replace('\\','/',$nombre_nomina);
 
                 $files = glob( $nomina.'*.xml', GLOB_MARK ); //GLOB_MARK adds a slash to directories returned
@@ -58,16 +68,16 @@ class DividirXMLController extends Controller{
 
                         switch ($orden_carpetas) {
                             case 'C-N-X':
-                                $carpeta_clues = $ruta_principal.'division/' . $clues . '/' . $nombre_nomina;
+                                $carpeta_clues = $ruta_nomina.'division/' . $clues . '/' . $nombre_nomina;
                                 break;
                             case 'N-C-X':
-                                $carpeta_clues = $ruta_principal.'division/' . $nombre_nomina . $clues;
+                                $carpeta_clues = $ruta_nomina.'division/' . $nombre_nomina . $clues;
                                 break;
                             case 'C-X':
-                                $carpeta_clues = $ruta_principal.'division/' . $clues;
+                                $carpeta_clues = $ruta_nomina.'division/' . $clues;
                                 break;
                             case 'N-X':
-                                $carpeta_clues = $ruta_principal.'division/' . $nombre_nomina;
+                                $carpeta_clues = $ruta_nomina.'division/' . $nombre_nomina;
                                 break;
                             default:
                                 echo "Error: No se especificó el orden de las carpetas."; die;

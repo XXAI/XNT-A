@@ -23,5 +23,4 @@ Route::post('/exportar_query_excel', 'ExportarQueriesController@exportarExcel');
 
 Route::post('/importar_archivo_csv','DatosTimbradoController@cargarArchivo');
 
-
-Route::get('/temporal_dividir_xml','DividirXMLController@dividirXML');
+Route::post('/dividir_xml','DividirXMLController@dividirXML');
