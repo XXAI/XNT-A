@@ -35,7 +35,7 @@ class ImportarController extends Controller
                     ],
                     'identificadores_acreditado'=>[
                         'ACRED'=>'ACREDITADO', 
-                        'NOACRED'=>'NO_ACREDITADO'
+                        'NOACRED'=>'NO_ACREDITADO',
                     ]
                 ],
                 'walter' =>   [
@@ -49,9 +49,15 @@ class ImportarController extends Controller
                     ],
                     'identificadores_acreditado'=>[
                         'RFACRE'=>'ACREDITADO',
-                        'RFNACRE'=>'NO_ACREDITADO',
-                        'SP49ACRE'=>'ACREDITADO',
-                        'SP49NACRE'=>'NO_ACREDITADO'
+                        //'RFNACRE'=>'NO_ACREDITADO',
+                        //'SP49ACRE'=>'ACREDITADO',
+                        //'SP49NACRE'=>'NO_ACREDITADO',
+                        'ATMPPAC' => 'ACREDITADO',
+                        'ATMPPNA'=> 'NO_ACREDITADO',
+                        'FORUNIAC' => 'ACREDITADO',
+                        'FORUNINA' => 'NO_ACREDITADO',
+                        'REFASENA' => 'NO_ACREDITADO',
+                        'REFASEAC' => 'ACREDITADO',
                     ]
                 ],
                 'bety' =>   [
