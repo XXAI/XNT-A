@@ -34,7 +34,8 @@ class ImportarController extends Controller
                         'nom_prod'=>'nomprod'
                     ],
                     'identificadores_acreditado'=>[
-                        'ACRED'=>'ACREDITADO', 
+                        'ACREASF'=>'ACREDITADO_FEDERAL', 
+                        'ACREASE'=>'ACREDITADO_ESTATAL',
                         'NOACRED'=>'NO_ACREDITADO',
                     ]
                 ],
@@ -49,15 +50,11 @@ class ImportarController extends Controller
                     ],
                     'identificadores_acreditado'=>[
                         'RFACRE'=>'ACREDITADO',
-                        //'RFNACRE'=>'NO_ACREDITADO',
-                        //'SP49ACRE'=>'ACREDITADO',
-                        //'SP49NACRE'=>'NO_ACREDITADO',
                         'ATMPPAC' => 'ACREDITADO',
                         'ATMPPNA'=> 'NO_ACREDITADO',
                         'FORUNIAC' => 'ACREDITADO',
                         'FORUNINA' => 'NO_ACREDITADO',
-                        'REFASENA' => 'NO_ACREDITADO',
-                        'REFASEAC' => 'ACREDITADO',
+                        'REFASENA' => 'NO_ACREDITADO'
                     ]
                 ],
                 'bety' =>   [
@@ -97,6 +94,8 @@ class ImportarController extends Controller
                     'titulo' =>'CARAVANAS'
                 ]
             ];
+
+            //return response()->json(['error' => "llega aqui",'line'=>'x'], 500);
             
             if(!isset($identificadores[$request->input('identificador_nomina')])){
                 return response()->json(['error'=>'Identificador de nomina no encontrado'], HttpResponse::HTTP_CONFLICT);
