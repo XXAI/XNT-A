@@ -256,6 +256,9 @@ class ImportarController extends Controller
                                     FROM nomina_reportes.dbf 
                                     where nomina = '$identificador_nomina' group by programa, acreditado;"); //nom_prod LIKE 'PRDO%' and
 
+            $total_percepciones = 0;
+            $total_deducciones = 0;
+
             if(count($programas) > 0){
                 foreach($programas as $index => $programa){
                     $datos_raw = DB::select("SELECT tipo_concepto, cl, partida, sum(importe) as importe, pa, tipo_nomina
@@ -303,12 +306,14 @@ class ImportarController extends Controller
                             $datos_nomina[$tipo_nomina]['DEDUCCIONES'][] = ['CL'=> $dato->cl, 'IMPORTE'=> $dato->importe, 'PA' => $dato->pa];
                         }
                     }
-    
+
                     foreach ($totales_raw as $dato) {
                         if($dato->tipo_concepto == 1){
                             $datos_nomina['TOTAL']['PERCEPCIONES'][] = ['CL'=> $dato->cl, 'PTDA'=> $dato->partida, 'IMPORTE'=> $dato->importe, 'PA' => $dato->pa];
+                            $total_percepciones += $dato->importe;
                         }else{
                             $datos_nomina['TOTAL']['DEDUCCIONES'][] = ['CL'=> $dato->cl, 'IMPORTE'=> $dato->importe, 'PA' => $dato->pa];
+                            $total_deducciones += $dato->importe;
                         }
                     }
                     
@@ -321,6 +326,7 @@ class ImportarController extends Controller
                     $datos_generados[$nombre_programa] = $datos_nomina;
                 }
             }else{
+                
                 $datos_raw = DB::select("SELECT tipo_concepto, cl, partida, sum(importe) as importe, pa, tipo_nomina
                                         FROM nomina_reportes.concentrado 
                                         WHERE nomina = '$identificador_nomina'
@@ -366,8 +372,10 @@ class ImportarController extends Controller
                 foreach ($totales_raw as $dato) {
                     if($dato->tipo_concepto == 1){
                         $datos_nomina['TOTAL']['PERCEPCIONES'][] = ['CL'=> $dato->cl, 'PTDA'=> $dato->partida, 'IMPORTE'=> $dato->importe, 'PA' => $dato->pa];
+                        $total_percepciones += $dato->importe;
                     }else{
                         $datos_nomina['TOTAL']['DEDUCCIONES'][] = ['CL'=> $dato->cl, 'IMPORTE'=> $dato->importe, 'PA' => $dato->pa];
+                        $total_deducciones += $dato->importe;
                     }
                 }
 
@@ -497,6 +505,7 @@ class ImportarController extends Controller
                     $sheet->getStyle('A'.($contador_filas-1).':U'.$contador_filas)->applyFromArray($bordes);
                     //$sheet->setBorder("A1:K$contador_filas", 'thin');
                 });
+
                 //$excel->getActiveSheet()->setAutoSize(false);
                 //$excel->getActiveSheet()->getColumnDimension('A')->setWidth(10);
                 
@@ -520,6 +529,56 @@ class ImportarController extends Controller
                 $excel->getActiveSheet()->getPageMargins()->setLeft(0.2755906);
                 
             }
+
+            $excel->sheet("RESUMEN GENERAL", function($sheet) use ($total_percepciones,$total_deducciones,$datos_archivo){
+                $sheet->mergeCells('A1:I1');
+                $sheet->mergeCells('A2:I2');
+                $sheet->mergeCells('A3:I3');
+
+                $sheet->row(1, array('RESUMEN DE  NOMINA CORRESPONDIENTE A LA QUINCENA '.$datos_archivo['tipo_anio'].' '.$datos_archivo['quincena'].'/'.$datos_archivo['anio']));
+                
+                $sheet->mergeCells('A4:C4');
+                $sheet->mergeCells('D4:F4');
+                $sheet->mergeCells('G4:I4');
+
+                //$linea = 6;
+                $sheet->row(4, array("PERCEPCIONES",'','',"DEDUCCIONES",'','',"LIQUIDO"));
+                
+                $sheet->mergeCells('A5:C5');
+                $sheet->mergeCells('D5:F5');
+                $sheet->mergeCells('G5:I5');
+
+                $sheet->row(5, array($total_percepciones,'','', $total_deducciones,'','',($total_percepciones - $total_deducciones)));
+
+                $sheet->cells("A1:I5", function($cells) {
+                    $cells->setAlignment('center');
+                });
+
+                $sheet->setColumnFormat(array(
+                    "A5:I5" => '#,##0.00'
+                ));
+
+                $bordes = [
+                    'borders' =>[
+                        'top' => [
+                            'style' => \PHPExcel_Style_Border::BORDER_DASHED
+                        ],
+                        'bottom' => [
+                            'style' => \PHPExcel_Style_Border::BORDER_DASHED
+                        ],
+                        'rigth' => [
+                            'style' => \PHPExcel_Style_Border::BORDER_DASHED
+                        ],
+                        'left' => [
+                            'style' => \PHPExcel_Style_Border::BORDER_DASHED
+                        ]
+                    ]
+                ];
+
+                $sheet->getStyle('A4:I4')->applyFromArray($bordes);
+                //$sheet->getStyle('A'.($contador_filas-1).':U'.$contador_filas)->applyFromArray($bordes);
+                
+            });
 
             //return response()->json(['data' => $datos_generados], HttpResponse::HTTP_OK);
         })->export('xls');
