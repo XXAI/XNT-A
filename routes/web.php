@@ -32,5 +32,8 @@ Route::get('/importar_archivo_csv', function(){
 });
 
 Route::get('/dividir_timbrado', function () {
-    return view('dividir_xmls');
+    $query = sprintf("SELECT DISTINCT TABLE_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE COLUMN_NAME IN ('NOMBRE_NOMINA','PER_GRAVADA','PERIODICIDAD','mmFolio') AND TABLE_SCHEMA='%s';", env('DB_DATABASE'));
+    $tablas = DB::select($query);
+    
+    return view('dividir_xmls',['datos'=>['tablas'=>$tablas]]);
 });
