@@ -7,6 +7,7 @@
         <title>Laravel</title>
         <!-- Fonts -->
         <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap.min.css')}}">
+        <script src="{{asset('js/jquery-3.4.1.min.js')}}"></script>
         <script src="{{asset('bootstrap/js/bootstrap.min.js')}}"></script>
     </head>
     <body>
@@ -27,10 +28,18 @@
                                     <option value='N-X'>    Nomina->XMLs        </option>
                                 </select>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group"> 
+                                <label>Nombre de la Tabla:</label> 
+                                <select name="nombre_tabla" class="form-control" >
+                                    @foreach($datos['tablas'] as $tabla)
+                                    <option value='{{$tabla->TABLE_NAME}}'>{{$tabla->TABLE_NAME}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <!--div class="form-group">
                                 <label>Nombre de Tabla</label>
                                 <input type="text" class="form-control" name="nombre_tabla">
-                            </div>
+                            </div-->
                             <div class="form-group"> 
                                 <label>Archivo ZIP</label>
                                 <input class="form-control-file" type="file" name="archivo_zip" accept=".zip"/>

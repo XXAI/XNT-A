@@ -1,0 +1,8 @@
+<?php
+
+$hostname_connNomina = "localhost";
+$database_connNomina = "base_de_datos";
+$username_connNomina = "root";
+$password_connNomina = "password";
+
+$public_path = '/usr/local/sistemas/apis/nomina/public/';

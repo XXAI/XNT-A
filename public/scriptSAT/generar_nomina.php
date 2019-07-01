@@ -185,7 +185,7 @@ $query_srcSQL = "CREATE TABLE `$TablaName` (
                 SET mmFolio = null, RAMA = 'SALUD' 
                 ", addslashes($csv));
 
-            $mysqli->query($query) or die($mysqli->error.__LINE__);
+            $mysqli->query($query) or die("Error MySQL: ".$mysqli->error." - Line: ".__LINE__);
 
             $mysqli->commit();
 
@@ -207,10 +207,23 @@ $query_srcSQL = "CREATE TABLE `$TablaName` (
     chdir($zippath);
     //exec("zip -P sat2015 -r ".$zipname." \"".$carpeta."/\"");
     exec("zip -P sat2015 -r ".$zipname." ./*");
+
+    //movemos el archivo un directorio arriba
+    rename($zippath.$zipname,$storage_path."archivos-layouts/".$zipname);
+    //eliminamos todos los layouts generados (ya estan en el zip)
+    delete_files($zippath);
     
     echo '<br>############################################### ------------------ Archivo ZIP ------------------ ###############################################<br>';
-    echo "<a href='archivos-layouts/$carpeta/$zipname'>Descargar ZIP</a>";
+    echo "<a href='archivos-layouts/$zipname'>Descargar ZIP</a>";
     //echo "zip -P sat2015 -j -r ".$zippath.$zipname." \"".$zippath.$carpeta."/\"";
+    
+    $zippath = $storage_path."archivos-layouts/";
+
+    header("Content-Type: application/zip");
+    header("Content-Disposition: attachment; filename=$zipname");
+    header("Content-Length: " . filesize($zippath.$zipname));
+    readfile($zippath.$zipname);
+    exit;
 
     /*
     $zip_status = $zip->open($zippath.$zipname);
