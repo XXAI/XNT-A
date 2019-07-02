@@ -218,8 +218,8 @@ $query_srcSQL = "CREATE TABLE `$TablaName` (
     //eliminamos todos los layouts generados (ya estan en el zip)
     delete_files($zippath);
     
-    echo '<br>############################################### ------------------ Archivo ZIP ------------------ ###############################################<br>';
-    echo "<a href='archivos-layouts/$zipname'>Descargar ZIP</a>";
+    //echo '<br>############################################### ------------------ Archivo ZIP ------------------ ###############################################<br>';
+    //echo "<a href='archivos-layouts/$zipname'>Descargar ZIP</a>";
     //echo "zip -P sat2015 -j -r ".$zippath.$zipname." \"".$zippath.$carpeta."/\"";
     
     $zippath = $storage_path."archivos-layouts/";
@@ -228,6 +228,9 @@ $query_srcSQL = "CREATE TABLE `$TablaName` (
     header("Content-Disposition: attachment; filename=$zipname");
     header("Content-Length: " . filesize($zippath.$zipname));
     readfile($zippath.$zipname);
+
+    delete_files($zippath.$zipname);
+
     exit;
 
     /*

@@ -9,6 +9,7 @@ use App\Http\Requests;
 use Illuminate\Support\Facades\Input;
 use \Excel;
 use \Validator,\Hash, \Response, \DB;
+use \ZipArchive;
 
 use XBase\Table;
 
@@ -30,6 +31,10 @@ class DividirXMLController extends Controller{
             $orden_carpetas = $request->get('orden_carpetas');
 
             $ruta_nomina = $ruta_principal.'/'.$tabla_nomina.'/';
+
+            if(is_dir($ruta_nomina)){
+                $this->delete_files($ruta_nomina);
+            }
             mkdir($ruta_nomina, 0777, true);
             
             $archivo_zip = $request->file('archivo_zip');
@@ -98,15 +103,48 @@ class DividirXMLController extends Controller{
                         //rename($file, $Carpeta . '/' . $nombre_archivo);
                         $contador++;
                     }else{
-                        echo "Error: RFC no encontrado: " . $rfc; die;
+                        return response()->json(['error' => 'Error: RFC no encontrado ' . $rfc], HttpResponse::HTTP_CONFLICT);
                     }
                 }
             }
 
-            echo "Carpetas: " . $orden_carpetas . " | Total archivos: " . $contador;
-        }catch(\Exception $e){
-            echo $e->getMessage() . '<br> ' . $e->getLine() . '<br> ' . $Carpeta . '<br> ' . $nombre_archivo;
-        }
 
+            $zip = new ZipArchive();
+            $zippath = $ruta_nomina; //.'division/';
+            $zipname = "XMLs.".$tabla_nomina.".zip";
+            
+            chdir($zippath . 'division/');
+            exec("zip -P ssa2015 -r ".$zipname." ./*");
+
+            //movemos el archivo un directorio arriba
+            rename($zippath . 'division/' . $zipname, $zippath . $zipname);
+            //eliminamos todos los layouts generados (ya estan en el zip)
+            $this->delete_files($zippath . 'division/');
+            $this->delete_files($zippath . 'xmls/');
+            
+            header("Content-Type: application/zip");
+            header("Content-Disposition: attachment; filename=$zipname");
+            header("Content-Length: " . filesize($zippath.$zipname));
+            readfile($zippath.$zipname);
+
+            $this->delete_files($ruta_nomina);
+            
+            return response()->json(['data' => "Carpetas: " . $orden_carpetas . " | Total archivos: " . $contador], HttpResponse::HTTP_OK);
+        }catch(\Exception $e){
+            return response()->json(['error' => $e->getMessage(), 'line'=>$e->getLine(),'carpeta'=>$Carpeta,'nombre_archivo'=>$nombre_archivo], HttpResponse::HTTP_CONFLICT);
+        }
+    }
+
+    function delete_files($target) {
+        if(is_dir($target)){
+            $files = glob( $target . '*', GLOB_MARK ); //GLOB_MARK adds a slash to directories returned
+    
+            foreach( $files as $file ){
+                $this->delete_files( $file );      
+            }
+            rmdir( $target );
+        } elseif(is_file($target)) {
+            unlink( $target );  
+        }
     }
 }
