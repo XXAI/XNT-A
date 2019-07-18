@@ -201,7 +201,7 @@ $query_srcSQL = "CREATE TABLE `$TablaName` (
     }
     echo "Se inicia comienzo de generacion de archivos.<br>\n";
     $carpeta = GenerarNominaSAT($TipoNomina, $TablaName, $FechaGeneracion, $FechaInicio, $FechaFinal, $Dias, $Periodicidad, $mysqli);
-    echo "Se termino comienzo de generacion de archivos.<br>\n";
+    echo "<br>Se termino generacion de archivos.<br>\n";
 
     $storage_path = $public_path.'scriptSAT/';
 
@@ -210,12 +210,14 @@ $query_srcSQL = "CREATE TABLE `$TablaName` (
     $zipname = "Layouts.SAT.".$carpeta.".zip";
     
     chdir($zippath);
-    //exec("zip -P sat2015 -r ".$zipname." \"".$carpeta."/\"");
+    echo "Generación del archivo zip.<br>\n";
     exec("zip -P sat2015 -r ".$zipname." ./*");
     
     //movemos el archivo un directorio arriba
+    echo "Moviendo zip.<br>\n";
     rename($zippath.$zipname,$storage_path."archivos-layouts/".$zipname);
     //eliminamos todos los layouts generados (ya estan en el zip)
+    echo "Eliminando archivos generados.<br>\n";
     delete_files($zippath);
     
     //echo '<br>############################################### ------------------ Archivo ZIP ------------------ ###############################################<br>';
@@ -229,7 +231,7 @@ $query_srcSQL = "CREATE TABLE `$TablaName` (
     header("Content-Length: " . filesize($zippath.$zipname));
     readfile($zippath.$zipname);
 
-    delete_files($zippath.$zipname);
+    //delete_files($zippath.$zipname);
 
     exit;
 
