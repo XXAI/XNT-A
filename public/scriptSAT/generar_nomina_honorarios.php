@@ -129,6 +129,7 @@ $query_srcSQL = "CREATE TABLE `$TablaName` (
     `QNA` text DEFAULT NULL,
     `PERIODICIDAD` text DEFAULT NULL,
     `OBSERVACIONES` varchar(255) DEFAULT NULL,
+    `CEDULA_PROF` varchar(255) DEFAULT NULL,
     `mmFolio` int(11) NOT NULL AUTO_INCREMENT,
     `RAMA` varchar(125) DEFAULT NULL,
     PRIMARY KEY (`mmFolio`)
