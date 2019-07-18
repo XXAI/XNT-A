@@ -220,11 +220,11 @@ $query_srcSQL = "CREATE TABLE `$TablaName` (
     echo "Eliminando archivos generados.<br>\n";
     delete_files($zippath);
     
-    //echo '<br>############################################### ------------------ Archivo ZIP ------------------ ###############################################<br>';
-    //echo "<a href='archivos-layouts/$zipname'>Descargar ZIP</a>";
-    //echo "zip -P sat2015 -j -r ".$zippath.$zipname." \"".$zippath.$carpeta."/\"";
-    
     $zippath = $storage_path."archivos-layouts/";
+
+    echo '<br>############################################### ------------------ Archivo ZIP ------------------ ###############################################<br>';
+    echo "Archivo zip generado: ".$zippath.$zipname;
+    echo "<a href='archivos-layouts/$zipname'>Descargar ZIP</a>";
 
     header("Content-Type: application/zip");
     header("Content-Disposition: attachment; filename=$zipname");
@@ -232,6 +232,8 @@ $query_srcSQL = "CREATE TABLE `$TablaName` (
     readfile($zippath.$zipname);
 
     //delete_files($zippath.$zipname);
+
+    //echo "zip -P sat2015 -j -r ".$zippath.$zipname." \"".$zippath.$carpeta."/\"";
 
     exit;
 
