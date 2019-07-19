@@ -20,6 +20,9 @@ class DividirXMLController extends Controller{
             //$ruta_principal = env('PATH_DIVIDIR_XMLS'); //'C:/pruebas/';
             $ruta_principal = storage_path().'/division_xmls/';
             $tabla_nomina = $request->get('nombre_tabla');
+            $Carpeta = '';
+            $contador = 0;
+            $nombre_archivo = '';
 
             /*
                 La división de las carpetas se puede especificar como:
@@ -50,9 +53,6 @@ class DividirXMLController extends Controller{
             //$files = glob( $ruta_principal.'xmls/*' . '*', GLOB_MARK ); //GLOB_MARK adds a slash to directories returned
             $nominas = glob( $ruta_nomina.'xmls/*' . '*', GLOB_MARK ); //GLOB_MARK adds a slash to directories returned
             
-            $Carpeta = '';
-            $contador = 0;
-
             foreach($nominas as $nomina){
                 $nombre_nomina = str_replace( $ruta_nomina.'xmls/','',$nomina);
                 $nombre_nomina = str_replace('\\','/',$nombre_nomina);
