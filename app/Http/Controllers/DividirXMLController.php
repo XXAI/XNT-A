@@ -33,7 +33,7 @@ class DividirXMLController extends Controller{
             */
             $orden_carpetas = $request->get('orden_carpetas');
 
-            $ruta_nomina = $ruta_principal.'/'.$tabla_nomina.'/';
+            $ruta_nomina = $ruta_principal.$tabla_nomina.'/';
 
             if(is_dir($ruta_nomina)){
                 $this->delete_files($ruta_nomina);
