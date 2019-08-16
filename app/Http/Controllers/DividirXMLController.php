@@ -119,15 +119,15 @@ class DividirXMLController extends Controller{
             //movemos el archivo un directorio arriba
             rename($zippath . 'division/' . $zipname, $zippath . $zipname);
             //eliminamos todos los layouts generados (ya estan en el zip)
-            $this->delete_files($zippath . 'division/');
-            $this->delete_files($zippath . 'xmls/');
+            //$this->delete_files($zippath . 'division/');
+            //$this->delete_files($zippath . 'xmls/');
             
             header("Content-Type: application/zip");
             header("Content-Disposition: attachment; filename=$zipname");
             header("Content-Length: " . filesize($zippath.$zipname));
             readfile($zippath.$zipname);
 
-            $this->delete_files($ruta_nomina);
+            //$this->delete_files($ruta_nomina);
             
             return response()->json(['data' => "Carpetas: " . $orden_carpetas . " | Total archivos: " . $contador], HttpResponse::HTTP_OK);
         }catch(\Exception $e){
