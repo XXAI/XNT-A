@@ -161,7 +161,7 @@ $query_srcSQL = "CREATE TABLE `$TablaName` (
             /**** Conteo de columnas en el csv */
             while ($line = fgetcsv(fopen($csv,'r'))){
                 $numcols = count($line);
-                if ($numcols < 99 || $numcols > 100) {
+                if ($numcols < 99 || $numcols > 101) {
                     echo '===================== ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR ERROR =====================  <br>';
                     echo "Error: el numero de columnas en el csv es incorrecto, $numcols. En linea ".++$batchcount.". <br>";
                     die;
