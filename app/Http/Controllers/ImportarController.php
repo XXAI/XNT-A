@@ -68,6 +68,17 @@ class ImportarController extends Controller
                     ],
                     'identificadores_acreditado'=>[]
                 ],
+                'precarios' =>   [
+                    'clave'=>'PRECARIOS',  
+                    'usa_dbf'=>true,
+                    'columnas_dbf'=>[
+                        'rfc'=>'rfc',
+                        'programa'=>'tipo_de_fu',
+                        'acreditado'=>'qna',
+                        'nom_prod'=>'prdname'
+                    ],
+                    'identificadores_acreditado'=>[]
+                ],
                 'bety' =>   [
                     'clave'=>'BETY',  
                     'usa_dbf'=>true,

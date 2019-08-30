@@ -36,7 +36,8 @@
                                     <option value='walter' >         Walter         </option>
                                     <option value='bety' >           Bety           </option>
                                     <option value='homologados' >    Homologados    </option>
-                                    <option value='formalizados' >   Formalizados    </option>
+                                    <option value='formalizados' >   Formalizados   </option>
+                                    <option value='precarios' >      Precarios      </option>
                                     <option value='mandos_medios' >  Mandos Medios  </option>
                                     <option value='pac' >            PAC            </option>
                                     <option value='san_agustin' >    San Agustin    </option>
