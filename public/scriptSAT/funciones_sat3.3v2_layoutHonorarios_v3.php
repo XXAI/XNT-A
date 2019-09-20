@@ -122,7 +122,7 @@ $Dato="DC|3.3|NOM".$TipoNomina."|".$Folio."|".$FechaHoraGeneracion."|99|".number
     $NPD=1;
     //---
     if($row_srcSQL["P0200"]){
-    $Dato="NPD|".($NPD++)."|001|P0200|Honorarios|".number_format($row_srcSQL["P0200"],2,".","")."|0"."\r";
+    $Dato="NPD|".($NPD++)."|046|P0200|Honorarios|".number_format($row_srcSQL["P0200"],2,".","")."|0"."\r";
     fwrite($fh,$Dato.PHP_EOL);
     }
     
