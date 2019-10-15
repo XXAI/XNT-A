@@ -88,11 +88,11 @@ $Dato="DC|3.3|NOM".$TipoNomina."|".$Folio."|".$FechaHoraGeneracion."|99|".number
 
     if($TotalDeducciones>0)
     {
-        $Dato="CN|84111505|1|ACT|Pago de nómina|".number_format($TotalPercepciones+$TotalOtrosPagos,2,'.','')."|".number_format($TotalPercepciones+$TotalOtrosPagos,2,'.','')."|".number_format($TotalDeducciones,2,".","")."\r";
+        $Dato="CN|84111505|1|ACT|Pago de nómina".$Adenda."|".number_format($TotalPercepciones+$TotalOtrosPagos,2,'.','')."|".number_format($TotalPercepciones+$TotalOtrosPagos,2,'.','')."|".number_format($TotalDeducciones,2,".","")."\r";
         fwrite($fh,$Dato.PHP_EOL);
     }else
     {
-        $Dato="CN|84111505|1|ACT|Pago de nómina|".number_format($TotalPercepciones+$TotalOtrosPagos,2,'.','')."|".number_format($TotalPercepciones+$TotalOtrosPagos,2,'.','')."|\r";
+        $Dato="CN|84111505|1|ACT|Pago de nómina".$Adenda."|".number_format($TotalPercepciones+$TotalOtrosPagos,2,'.','')."|".number_format($TotalPercepciones+$TotalOtrosPagos,2,'.','')."|\r";
         fwrite($fh,$Dato.PHP_EOL);
     }
 	

@@ -8,6 +8,7 @@ $Dias = $_POST['dias'];
 $Periodicidad = $_POST['periodicidad'];
 $TablaName = $_POST['nombre_nomina'];
 $TipoNomina = "01";
+$Adenda = $_POST['adenda'];
 
 echo "Recibida información del formulario.<br>\n";
 
