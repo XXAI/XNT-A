@@ -202,7 +202,7 @@ $query_srcSQL = "CREATE TABLE `$TablaName` (
         $mysqli->rollback();
     }
     echo "Se inicia comienzo de generacion de archivos.<br>\n";
-    $carpeta = GenerarNominaSAT($TipoNomina, $TablaName, $FechaGeneracion, $FechaInicio, $FechaFinal, $Dias, $Periodicidad, $mysqli);
+    $carpeta = GenerarNominaSAT($TipoNomina, $TablaName, $FechaGeneracion, $FechaInicio, $FechaFinal, $Dias, $Periodicidad, $Adenda,$mysqli);
     echo "<br>Se termino generacion de archivos.<br>\n";
 
     $storage_path = $public_path.'scriptSAT/';
