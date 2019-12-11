@@ -186,7 +186,7 @@ $Dato="DC|3.3|NOM".$TipoNomina."|".$Folio."|".$FechaHoraGeneracion."|99|".number
 	}
 	
 	
-    $Dato="ADO|74|".$row_srcSQL["RFC"]."|0|Descripcion\r";
+    $Dato="ADO|74|ISA961203QN5|0|Chiapas\r";
     fwrite($fh,$Dato.PHP_EOL);
 
     $Dato="AEN|".$Adenda."\r";
