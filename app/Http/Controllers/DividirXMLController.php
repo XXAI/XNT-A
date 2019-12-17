@@ -17,12 +17,19 @@ class DividirXMLController extends Controller{
     
     public function dividirXML(Request $request){
         try{
+            
+
             //$ruta_principal = env('PATH_DIVIDIR_XMLS'); //'C:/pruebas/';
             $ruta_principal = storage_path().'/division_xmls/';
             $tabla_nomina = $request->get('nombre_tabla');
             $Carpeta = '';
             $contador = 0;
             $nombre_archivo = '';
+
+            $check = \DB::select('select * from '.$tabla_nomina.' limit 1');
+            if(!property_exists($check[0],'archivo_xml')){
+                \DB::statement("ALTER TABLE ".$tabla_nomina." ADD COLUMN archivo_xml VARCHAR(255);");
+            }
 
             /*
                 La división de las carpetas se puede especificar como:
@@ -125,7 +132,7 @@ class DividirXMLController extends Controller{
             Storage::put($nombre_archivo_lista,"mmFolio, NOMBRE_NOMINA, RFC, archivo_xml");
             
             foreach($listado_archivos as $registro){
-                $linea = $registro->mmFolio.','.$registro->NOMBRE_NOMINA.','.$registro->RFC.','.$registro->archivo_xml."#EOL#\n";
+                $linea = $registro->mmFolio.','.$registro->NOMBRE_NOMINA.','.$registro->RFC.','.$registro->archivo_xml;
                 Storage::append($nombre_archivo_lista, $linea);
             }
             rename(storage_path().'/'.$nombre_archivo_lista, $ruta_nomina.'division/'.$nombre_archivo_lista);
