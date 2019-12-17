@@ -127,6 +127,7 @@ $query_srcSQL = "CREATE TABLE `$TablaName` (
     `CEDULA_PROF` varchar(255) DEFAULT NULL,
     `mmFolio` int(11) NOT NULL AUTO_INCREMENT,
     `RAMA` varchar(125) DEFAULT NULL,
+    `archivo_xml` varchar(255) DEFAULT NULL,
     PRIMARY KEY (`mmFolio`)
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 /////////
@@ -183,7 +184,7 @@ $query_srcSQL = "CREATE TABLE `$TablaName` (
                 ESCAPED BY '\"' 
                 LINES TERMINATED BY '\\n'
                 IGNORE 1 LINES
-                SET mmFolio = null, RAMA = 'SALUD' 
+                SET mmFolio = null, RAMA = 'SALUD', archivo_xml = null 
                 ", addslashes($csv));
 
             $mysqli->query($query) or die("Error MySQL: ".$mysqli->error." - Line: ".__LINE__);

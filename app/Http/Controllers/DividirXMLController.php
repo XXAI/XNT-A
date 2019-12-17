@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Input;
 use \Excel;
-use \Validator,\Hash, \Response, \DB;
+use \Validator,\Hash, \Response, \DB, \Storage;
 use \ZipArchive;
 
 use XBase\Table;
@@ -50,6 +50,7 @@ class DividirXMLController extends Controller{
 
             $rfc_clues = \DB::table($tabla_nomina)->selectRaw("CONCAT(NOMBRE_NOMINA,'_',RFC) as LLAVE, CLUES")->pluck('CLUES','LLAVE');
 
+            $rfc_encontrado = [];
             //$files = glob( $ruta_principal.'xmls/*' . '*', GLOB_MARK ); //GLOB_MARK adds a slash to directories returned
             $nominas = glob( $ruta_nomina.'xmls/*' . '*', GLOB_MARK ); //GLOB_MARK adds a slash to directories returned
             
@@ -70,6 +71,7 @@ class DividirXMLController extends Controller{
                     $llave = str_replace('/','_',$nombre_nomina) . $rfc;
                     if(isset($rfc_clues[$llave])){
                         $clues = $rfc_clues[$llave];
+                        $rfc_encontrado[$llave] = $nombre_archivo;
 
                         switch ($orden_carpetas) {
                             case 'C-N-X':
@@ -108,6 +110,25 @@ class DividirXMLController extends Controller{
                 }
             }
 
+            if(count($rfc_encontrado)){
+                $update_query = "";
+                foreach($rfc_encontrado as $llave => $nombre_archivo){
+                    $datos_id = explode('_',$llave);
+                    $update_query .= "UPDATE " . $tabla_nomina . " SET archivo_xml = '" . $nombre_archivo . "' WHERE NOMBRE_NOMINA = '" . $datos_id[0] . "' AND RFC = '" . $datos_id[1] . "';";
+                }
+                DB::statement($update_query);
+            }
+
+            $listado_archivos = \DB::table($tabla_nomina)->selectRaw("mmFolio, NOMBRE_NOMINA, RFC, archivo_xml")->get();
+
+            $nombre_archivo_lista = $tabla_nomina.'-listado-registros.csv';
+            Storage::put($nombre_archivo_lista,"mmFolio, NOMBRE_NOMINA, RFC, archivo_xml");
+            
+            foreach($listado_archivos as $registro){
+                $linea = $registro->mmFolio.','.$registro->NOMBRE_NOMINA.','.$registro->RFC.','.$registro->archivo_xml."#EOL#\n";
+                Storage::append($nombre_archivo_lista, $linea);
+            }
+            rename(storage_path().'/'.$nombre_archivo_lista, $ruta_nomina.'division/'.$nombre_archivo_lista);
 
             $zip = new ZipArchive();
             $zippath = $ruta_nomina; //.'division/';
