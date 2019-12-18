@@ -112,7 +112,7 @@ class DividirXMLController extends Controller{
                         //rename($file, $Carpeta . '/' . $nombre_archivo);
                         $contador++;
                     }else{
-                        return response()->json(['error' => 'Error: RFC no encontrado ' . $rfc], HttpResponse::HTTP_CONFLICT);
+                        return response()->json(['error' => 'Error: RFC no encontrado ' . $rfc . ' en el archivo: ' . $nombre_archivo], HttpResponse::HTTP_CONFLICT);
                     }
                 }
             }
