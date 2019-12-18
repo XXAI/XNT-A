@@ -78,7 +78,7 @@ class DividirXMLController extends Controller{
                     $llave = str_replace('/','_',$nombre_nomina) . $rfc;
                     if(isset($rfc_clues[$llave])){
                         $clues = $rfc_clues[$llave];
-                        $rfc_encontrado[$llave] = $nombre_archivo;
+                        $rfc_encontrado[str_replace('/','|',$nombre_nomina).$rfc] = $nombre_archivo;
 
                         switch ($orden_carpetas) {
                             case 'C-N-X':
@@ -116,26 +116,29 @@ class DividirXMLController extends Controller{
                     }
                 }
             }
-
+			
+			$update_query = "UPDATE " . $tabla_nomina . " SET archivo_xml = NULL;";
+			DB::statement($update_query);
+			
             if(count($rfc_encontrado)){
                 $update_query = "";
                 foreach($rfc_encontrado as $llave => $nombre_archivo){
-                    $datos_id = explode('_',$llave);
+                    $datos_id = explode('|',$llave);
                     $update_query .= "UPDATE " . $tabla_nomina . " SET archivo_xml = '" . $nombre_archivo . "' WHERE NOMBRE_NOMINA = '" . $datos_id[0] . "' AND RFC = '" . $datos_id[1] . "';";
                 }
                 DB::statement($update_query);
             }
 
             $listado_archivos = \DB::table($tabla_nomina)->selectRaw("mmFolio, NOMBRE_NOMINA, RFC, archivo_xml")->get();
-
-            $nombre_archivo_lista = $tabla_nomina.'-listado-registros.csv';
-            Storage::put($nombre_archivo_lista,"mmFolio, NOMBRE_NOMINA, RFC, archivo_xml");
             
+			$filepath = $ruta_nomina.'division/'.$tabla_nomina.'-listado-registros.csv';
+			$fh = fopen($filepath,"w");
+			
             foreach($listado_archivos as $registro){
-                $linea = $registro->mmFolio.','.$registro->NOMBRE_NOMINA.','.$registro->RFC.','.$registro->archivo_xml;
-                Storage::append($nombre_archivo_lista, $linea);
+                $linea = $registro->mmFolio.','.$registro->NOMBRE_NOMINA.','.$registro->RFC.','.$registro->archivo_xml."\r";
+				fwrite($fh,$linea.PHP_EOL);
             }
-            rename(storage_path().'/'.$nombre_archivo_lista, $ruta_nomina.'division/'.$nombre_archivo_lista);
+			fclose($fh);
 
             $zip = new ZipArchive();
             $zippath = $ruta_nomina; //.'division/';
