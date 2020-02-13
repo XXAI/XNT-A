@@ -117,8 +117,8 @@ class DividirXMLController extends Controller{
                 }
             }
 			
-			$update_query = "UPDATE " . $tabla_nomina . " SET archivo_xml = NULL;";
-			DB::statement($update_query);
+			//$update_query = "UPDATE " . $tabla_nomina . " SET archivo_xml = NULL;";
+			//DB::statement($update_query);
 			
             if(count($rfc_encontrado)){
                 $update_query = "";
