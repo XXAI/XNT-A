@@ -541,7 +541,7 @@ $Dato="DC|3.3|NOM".$TipoNomina."|".$Folio."|".$FechaHoraGeneracion."|99|".number
     fwrite($fh,$Dato.PHP_EOL);
     }
 
-    $Dato="NOP|002|02|Subsidio para el empleo (efectivamente entregado al trabajador)|0.01|0.01|||\r";
+    $Dato="NOP|002|999|Subsidio para el empleo (efectivamente entregado al trabajador)|0.01|0.01|||\r";
     fwrite($fh,$Dato.PHP_EOL);
     
 	/*if($row_srcSQL["OTROS_PAGOS"] > 0){
