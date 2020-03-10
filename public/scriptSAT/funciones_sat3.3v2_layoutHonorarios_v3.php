@@ -180,7 +180,10 @@ $Dato="DC|3.3|NOM".$TipoNomina."|".$Folio."|".$FechaHoraGeneracion."|99|".number
         fwrite($fh,$Dato.PHP_EOL);
 	}
 
-    if($row_srcSQL["OTROS_PAGOS"] > 0){
+	if ($row_srcSQL["OTROS_PAGOS"] == 0.01){
+		$Dato="NOP|002|999|Subsidio para el empleo (efectivamente entregado al trabajador)|0.01|0.01|||\r";
+    	fwrite($fh,$Dato.PHP_EOL);
+	}else if($row_srcSQL["OTROS_PAGOS"] > 0){
         $Dato="NOP|999|P24GA|GRATIFICACIÓN DE FIN DE AÑO|".number_format($row_srcSQL["OTROS_PAGOS"],2,".","")."||||\r";
         fwrite($fh,$Dato.PHP_EOL);
 	}
