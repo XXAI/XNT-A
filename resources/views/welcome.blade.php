@@ -21,7 +21,7 @@
                             <div class="form-row">
                                 <div class="form-group col-4"> <label>Tipo de año</label> <input class="form-control" type="text" name="tipo_anio" value="(A/C)"/> </div>
                                 <div class="form-group col-4"> <label>Quincena</label> <input class="form-control" type="text" name="quincena" value="01"/> </div>
-                                <div class="form-group col-4"> <label>Año</label> <input class="form-control" type="text" name="anio" value="2019"/> </div>
+                                <div class="form-group col-4"> <label>Año</label> <input class="form-control" type="text" name="anio" value="2020"/> </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-6"> <label>Unidad Responsable</label> <input class="form-control" type="text" name="unidad_responsable" value="CON"/> </div>

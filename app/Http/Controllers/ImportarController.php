@@ -30,12 +30,13 @@ class ImportarController extends Controller
                     'columnas_dbf'=>[
                         'rfc'=>'rfc',
                         'programa'=>'programa',
-                        'acreditado'=>'sinfuente',
+                        //'acreditado'=>'sinfuente',
+                        'acreditado'=>'fuente',
                         'nom_prod'=>'nomprod'
                     ],
                     'identificadores_acreditado'=>[
-                        'ACREASF'=>'ACREDITADO_FEDERAL', 
-                        'ACREASE'=>'ACREDITADO_ESTATAL',
+                        'INSABI FED'=>'ACREDITADO_FEDERAL', 
+                        'INSABI EST'=>'ACREDITADO_ESTATAL',
                         'NOACRED'=>'NO_ACREDITADO',
                     ]
                 ],
