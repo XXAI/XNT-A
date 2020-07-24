@@ -60,7 +60,8 @@ class ImportarController extends Controller
                         'FUMINSAF' => 'INSABI_FEDERAL', 
                         'FUMINSAE' => 'INSABI_ESTATAL', 
                         'RAAINSAF' => 'INSABI_FEDERAL', 
-                        'RAAINSAE' => 'INSABI_ESTATAL'
+                        'RAAINSAE' => 'INSABI_ESTATAL',
+                        'REPLAPER' => 'NO_ACREDITADO'
                     ]
                 ],
                 'formalizados' =>   [
