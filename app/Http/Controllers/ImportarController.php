@@ -55,7 +55,12 @@ class ImportarController extends Controller
                         'ATMPPNA'=> 'NO_ACREDITADO',
                         'FORUNIAC' => 'ACREDITADO',
                         'FORUNINA' => 'NO_ACREDITADO',
-                        'REFASENA' => 'NO_ACREDITADO'
+                        'REFASENA' => 'NO_ACREDITADO',
+                        'ATMINSAF' => 'INSABI_ESTATAL', 
+                        'FUMINSAF' => 'INSABI_FEDERAL', 
+                        'FUMINSAE' => 'INSABI_ESTATAL', 
+                        'RAAINSAF' => 'INSABI_FEDERAL', 
+                        'RAAINSAE' => 'INSABI_ESTATAL'
                     ]
                 ],
                 'formalizados' =>   [
