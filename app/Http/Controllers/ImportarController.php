@@ -35,8 +35,8 @@ class ImportarController extends Controller
                         'nom_prod'=>'nomprod'
                     ],
                     'identificadores_acreditado'=>[
-                        'INSABI FED'=>'ACREDITADO_FEDERAL', 
-                        'INSABI EST'=>'ACREDITADO_ESTATAL',
+                        'INSABI FED'=>'INSABI_FEDERAL', 
+                        'INSABI EST'=>'INSABI_ESTATAL',
                         'NOACRED'=>'NO_ACREDITADO',
                     ]
                 ],
