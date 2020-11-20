@@ -32,7 +32,8 @@ class ImportarController extends Controller
                         'programa'=>'programa',
                         //'acreditado'=>'sinfuente',
                         'acreditado'=>'fuente',
-                        'nom_prod'=>'nomprod'
+                        'nom_prod'=>'nomprod',
+                        'id_rfc'=>'numctrol'
                     ],
                     'identificadores_acreditado'=>[
                         'INSABI FED'=>'INSABI_FEDERAL', 
