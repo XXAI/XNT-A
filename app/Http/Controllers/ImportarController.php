@@ -48,7 +48,8 @@ class ImportarController extends Controller
                         'rfc'=>'rfc',
                         'programa'=>'programa',
                         'acreditado'=>'ban',      
-                        'nom_prod'=>'nomprod'
+                        'nom_prod'=>'nomprod',
+                        'id_rfc'=>'numctrol'
                     ],
                     'identificadores_acreditado'=>[
                         'RFACRE'=>'ACREDITADO',
@@ -72,7 +73,8 @@ class ImportarController extends Controller
                         'rfc'=>'rfc',
                         'programa'=>'tipo_de_fu',
                         'acreditado'=>'qna',
-                        'nom_prod'=>'prdname'
+                        'nom_prod'=>'prdname',
+                        'id_rfc'=>'numctrol'
                     ],
                     'identificadores_acreditado'=>[]
                 ],
@@ -83,7 +85,8 @@ class ImportarController extends Controller
                         'rfc'=>'rfc',
                         'programa'=>'tipo_de_fu',
                         'acreditado'=>'qna',
-                        'nom_prod'=>'prdname'
+                        'nom_prod'=>'prdname',
+                        'id_rfc'=>'numctrol'
                     ],
                     'identificadores_acreditado'=>[]
                 ],
@@ -94,7 +97,8 @@ class ImportarController extends Controller
                         'rfc'=>'rfc',
                         'programa'=>'programa',
                         'acreditado'=>'num',      
-                        'nom_prod'=>'nomprod'
+                        'nom_prod'=>'nomprod',
+                        'id_rfc'=>'numctrol'
                     ],
                     'identificadores_acreditado'=>[]
                 ],
