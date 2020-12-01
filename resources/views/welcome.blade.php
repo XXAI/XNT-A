@@ -45,6 +45,13 @@
                                 </select>
                             </div>
                             <div class="form-group"> 
+                                <label>Tipo Nomina</label> 
+                                <select name="identificador_vista" class="form-control">
+                                    <option value='1' >       Normal       </option>
+                                    <option value='2' >       Cambio Programa       </option>
+                                </select>
+                            </div>
+                            <div class="form-group"> 
                                 <label>Archivo DBF</label>                     <input class="form-control-file" type="file" name="archivo_dbf" accept=".dbf"/>       
                                 <small id="dbf_ayuda" class="form-text text-muted">Para las nominas de Homologados, Mandos Medios, PAC y San Agustin no es necesario cargar el archivo DBF</small>
                             </div>
