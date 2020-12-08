@@ -49,6 +49,7 @@
                                 <select name="identificador_vista" class="form-control">
                                     <option value='1' >       Normal       </option>
                                     <option value='2' >       Cambio Programa       </option>
+                                    <option value='3' >       Prima       </option>
                                 </select>
                             </div>
                             <div class="form-group"> 

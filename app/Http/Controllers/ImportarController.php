@@ -329,6 +329,23 @@ class ImportarController extends Controller
                                             WHERE  programa = '$programa->programa' and acreditado = '$programa->acreditado' and nomina = '$identificador_nomina'
                                             GROUP BY tipo_concepto, cl, pa, partida
                                             ORDER BY tipo_concepto asc;");
+                    }else if($tipo_vista == 3)
+                    {
+                        $datos_raw = DB::select("SELECT tipo_concepto, cl, partida, sum(importe) as importe, pa, tipo_nomina
+                        FROM nomina_reportes.concentrado_prima
+                        WHERE  programa = '$programa->programa' and acreditado = '$programa->acreditado' and nomina = '$identificador_nomina'
+                        GROUP BY tipo_concepto, cl, pa, partida, tipo_nomina
+                        ORDER BY tipo_concepto asc;");
+
+                        if(count($datos_raw) <= 0){
+                            continue;
+                        }
+
+                        $totales_raw = DB::select("SELECT tipo_concepto, cl, partida, sum(importe) as importe, pa
+                                            FROM nomina_reportes.concentrado_prima
+                                            WHERE  programa = '$programa->programa' and acreditado = '$programa->acreditado' and nomina = '$identificador_nomina'
+                                            GROUP BY tipo_concepto, cl, pa, partida
+                                            ORDER BY tipo_concepto asc;");
                     }
                     
                     $datos_nomina = [
@@ -404,6 +421,19 @@ class ImportarController extends Controller
 
                     $totales_raw = DB::select("SELECT tipo_concepto, cl, partida, sum(importe) as importe, pa
                                     FROM nomina_reportes.concentrado_modificado 
+                                    WHERE  nomina = '$identificador_nomina'
+                                    GROUP BY tipo_concepto, cl, pa, partida
+                                    ORDER BY tipo_concepto asc;");    
+                }else if($tipo_vista == 3)
+                {
+                    $datos_raw = DB::select("SELECT tipo_concepto, cl, partida, sum(importe) as importe, pa, tipo_nomina
+                    FROM nomina_reportes.concentrado_prima
+                    WHERE nomina = '$identificador_nomina'
+                    GROUP BY tipo_concepto, cl, pa, partida, tipo_nomina
+                    ORDER BY tipo_concepto asc;");
+
+                    $totales_raw = DB::select("SELECT tipo_concepto, cl, partida, sum(importe) as importe, pa
+                                    FROM nomina_reportes.concentrado_prima 
                                     WHERE  nomina = '$identificador_nomina'
                                     GROUP BY tipo_concepto, cl, pa, partida
                                     ORDER BY tipo_concepto asc;");
