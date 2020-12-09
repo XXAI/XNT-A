@@ -74,7 +74,7 @@ class ImportarController extends Controller
                         'programa'=>'tipo_de_fu',
                         'acreditado'=>'qna',
                         'nom_prod'=>'prdname',
-                        'id_rfc'=>'numctrol'
+                        'id_rfc'=>'qna'
                     ],
                     'identificadores_acreditado'=>[]
                 ],
@@ -86,7 +86,7 @@ class ImportarController extends Controller
                         'programa'=>'tipo_de_fu',
                         'acreditado'=>'qna',
                         'nom_prod'=>'prdname',
-                        'id_rfc'=>'numctrol'
+                        'id_rfc'=>'qna'
                     ],
                     'identificadores_acreditado'=>[]
                 ],
@@ -98,7 +98,7 @@ class ImportarController extends Controller
                         'programa'=>'programa',
                         'acreditado'=>'num',      
                         'nom_prod'=>'nomprod',
-                        'id_rfc'=>'numctrol'
+                        'id_rfc'=>'rfc'
                     ],
                     'identificadores_acreditado'=>[]
                 ],
