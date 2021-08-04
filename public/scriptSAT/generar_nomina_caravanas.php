@@ -207,7 +207,7 @@ $query_srcSQL = "CREATE TABLE `$TablaName` (
     echo "<br>Se termino generacion de archivos.<br>\n";
 
     $storage_path = $public_path.'scriptSAT/';
-    exit;
+    
     $zip = new ZipArchive();
     $zippath = $storage_path."archivos-layouts/".$carpeta."/";
     $zipname = "Layouts.SAT.".$carpeta.".zip";
