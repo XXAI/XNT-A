@@ -37,3 +37,8 @@ Route::get('/dividir_timbrado', function () {
     
     return view('dividir_xmls',['datos'=>['tablas'=>$tablas]]);
 });
+
+Route::get('/archivos_temporales',function(){
+    $datos = [];
+    return view('archivos_temporales',['datos'=>$datos]);
+});
