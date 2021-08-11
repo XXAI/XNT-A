@@ -29,6 +29,10 @@ function borrarArchivos(){
     $('#error-message').hide();
     $('#success-message > span').text('');
     $('#success-message').hide();
+
+    $('#btn-borrar-archivos').attr('disabled','disabled');
+    $('#loading-message > span').text('Borrando Archivos...');
+    $('#loading-message').show();
     $.ajax({ url: url_borrar_archivos,
         context: document.body,
         data: {
@@ -37,6 +41,10 @@ function borrarArchivos(){
         type: 'GET',
         cache: false,
         success: function(response){
+            $('#loading-message > span').text('');
+            $('#loading-message').hide();
+            $('#btn-borrar-archivos').removeAttr('disabled');
+
             if(response.data){
                 $('#success-message > span').text(response.data);
                 $('#success-message').show();
@@ -44,6 +52,10 @@ function borrarArchivos(){
             }
         },
         error: function(xhr) {
+            $('#loading-message > span').text('');
+            $('#loading-message').hide();
+            $('#btn-borrar-archivos').removeAttr('disabled');
+
             var response = xhr.responseJSON;
             $('#error-message > span').text(response.error);
             $('#error-message').show();

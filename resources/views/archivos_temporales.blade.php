@@ -33,13 +33,14 @@
                         </table>
                         <div class="row">
                             <div class="col"><input type="password" class="form-control" id="contrasena-permiso" placeholder="Contraseña"></div>
-                            <div class="col"><button type="button" class="btn btn-danger" onClick="borrarArchivos()">Borrar Archivos</button></div>
+                            <div class="col"><button type="button" class="btn btn-danger" id="btn-borrar-archivos" onClick="borrarArchivos()">Borrar Archivos</button></div>
                             <div class="col-3"></div>
                         </div>
                         <br>
                         <div class="row">
                             <div class="col-12 alert alert-danger" style="display:none;" id="error-message"><span></span></div>
                             <div class="col-12 alert alert-success" style="display:none;" id="success-message"><span></span></div>
+                            <div class="col-12 alert alert-info" style="display:none;" id="loading-message"><span></span></div>
                         </div>
                     </div>
                     <div class="col-3"></div>

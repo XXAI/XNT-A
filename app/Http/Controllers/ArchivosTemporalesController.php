@@ -7,8 +7,9 @@ use Illuminate\Http\Response as HttpResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Hash;
 use \Excel;
-use \Validator,\Hash, \Response, \DB, \Storage;
+use \Validator, \Response, \DB, \Storage;
 use \ZipArchive;
 
 use XBase\Table;
@@ -48,15 +49,17 @@ class ArchivosTemporalesController extends Controller{
         //
         try{
             $tiene_permiso = false;
-            $permiso_pass ='';
+            $permiso_pass ='$2y$10$TBXkndl1q0bS0eHD62eVhOK5cEO9DHXNDX1HSHBFI4CRbT8OLLu16';
             $parametros = $request->all();
 
             if(isset($parametros['pass']) && $parametros['pass']){
-                $tiene_permiso = true;
+                if(Hash::check($parametros['pass'],$permiso_pass)){
+                    $tiene_permiso = true;
+                }
             }
 
             if(!$tiene_permiso){
-                return response()->json(['error' => 'Contraseña no Valida'], HttpResponse::HTTP_CONFLICT);
+                return response()->json(['error' => 'Contraseña no Valida','data'=>Hash::make($parametros['pass'])], HttpResponse::HTTP_CONFLICT);
             }
 
             $listado = [];
