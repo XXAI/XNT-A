@@ -61,7 +61,13 @@ $Nombre = str_replace("$", "", $Nombre);
 
 $TotalOtrosPagos=$row_srcSQL["OTROS_PAGOS"] ? $row_srcSQL["OTROS_PAGOS"] : 0;
 
-$Dato="DC|3.3|NOM".$TipoNomina."|".$Folio."|".$FechaHoraGeneracion."|99|".number_format($TotalPercepciones+$TotalOtrosPagos,2,'.','')."|".number_format($TotalDeducciones,2,".","")."|MXN||".number_format(($TotalPercepciones+$TotalOtrosPagos)-$TotalDeducciones,2,".","")."|N|PUE|29010||||"."\r";
+if($TipoHonorario == 'E023'){
+	$serie = 'RHN';
+}else{
+	$serie = 'NOM';
+}
+
+$Dato="DC|3.3|".$serie.$TipoNomina."|".$Folio."|".$FechaHoraGeneracion."|99|".number_format($TotalPercepciones+$TotalOtrosPagos,2,'.','')."|".number_format($TotalDeducciones,2,".","")."|MXN||".number_format(($TotalPercepciones+$TotalOtrosPagos)-$TotalDeducciones,2,".","")."|N|PUE|29010||||"."\r";
 	fwrite($fh,$Dato.PHP_EOL);
 
 	$Dato="EM|ISA961203QN5|INSTITUTO DE SALUD"."\r";
@@ -83,7 +89,13 @@ $Dato="DC|3.3|NOM".$TipoNomina."|".$Folio."|".$FechaHoraGeneracion."|99|".number
 	$Dato="RC|".$row_srcSQL["RFC"]."|".$Nombre."|P01\r";
 	fwrite($fh,$Dato.PHP_EOL);
 
-	$Dato="CNR|".$row_srcSQL["TipoE"]."|".$FechaPago."|".$FechaInicio."|".$FechaFinal."|".$Dias."|".($TotalPercepciones ? number_format($TotalPercepciones,2,'.','') : '')."|".number_format($TotalDeduccionesEtiqueta,2,".","")."|".number_format($TotalOtrosPagos,2,".","")."|".$row_srcSQL["CURP"]."||||09||".$Turno."|09|".$row_srcSQL["NUMCHE"]."||".$Puesto."||".$Periodicidad."|||||CHP"."\r";
+	if($TipoHonorario == 'E023'){
+		$departamento = $row_srcSQL["CLUES"];
+	}else{
+		$departamento = '';
+	}
+
+	$Dato="CNR|".$row_srcSQL["TipoE"]."|".$FechaPago."|".$FechaInicio."|".$FechaFinal."|".$Dias."|".($TotalPercepciones ? number_format($TotalPercepciones,2,'.','') : '')."|".number_format($TotalDeduccionesEtiqueta,2,".","")."|".number_format($TotalOtrosPagos,2,".","")."|".$row_srcSQL["CURP"]."||||09||".$Turno."|09|".$row_srcSQL["NUMCHE"]."|".$departamento."|".$Puesto."||".$Periodicidad."|||||CHP"."\r";
 	fwrite($fh,$Dato.PHP_EOL);
 
     if($TotalDeducciones>0)
@@ -120,10 +132,19 @@ $Dato="DC|3.3|NOM".$TipoNomina."|".$Folio."|".$FechaHoraGeneracion."|99|".number
     */
 
     $NPD=1;
+
+	if($TipoHonorario == 'E023'){
+		$clave = 'P0500';
+		$concepto = 'Ingresos Asimilados a Salarios';
+	}else{
+		$clave = 'P0200';
+		$concepto = 'Honorarios';
+	}
+
     //---
     if($row_srcSQL["P0200"]){
-    $Dato="NPD|".($NPD++)."|046|P0200|Honorarios|".number_format($row_srcSQL["P0200"],2,".","")."|0"."\r";
-    fwrite($fh,$Dato.PHP_EOL);
+    	$Dato="NPD|".($NPD++)."|046|".$clave."|".$concepto."|".number_format($row_srcSQL["P0200"],2,".","")."|0"."\r";
+    	fwrite($fh,$Dato.PHP_EOL);
     }
     
 
@@ -168,9 +189,14 @@ $Dato="DC|3.3|NOM".$TipoNomina."|".$Folio."|".$FechaHoraGeneracion."|99|".number
     
     //DEducciones
 
+	if($TipoHonorario == 'E023'){
+		$concepto_isr = 'IMPUESTO SOBRE LA RENTA';
+	}else{
+		$concepto_isr = 'ISR';
+	}
 
     if($row_srcSQL["ISR"]){
-        $Dato="NDD|002|D0100|ISR|".number_format($row_srcSQL["ISR"],2,".","")."\r";
+        $Dato="NDD|002|D0100|".$concepto_isr."|".number_format($row_srcSQL["ISR"],2,".","")."\r";
         fwrite($fh,$Dato.PHP_EOL);
 	}
 	

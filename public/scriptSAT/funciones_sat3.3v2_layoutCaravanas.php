@@ -122,7 +122,7 @@ $Dato="DC|3.3|BPM|".$Folio."|".$FechaHoraGeneracion."|99|".number_format($TotalP
     $NPD=1;
     //---
     if($row_srcSQL["P0200"]){
-    $Dato="NPD|".($NPD++)."|046|P0200|Ingresos Asimilados a Salarios|".number_format($row_srcSQL["P0200"],2,".","")."|0"."\r";
+    $Dato="NPD|".($NPD++)."|046|10500|Ingresos Asimilados a Salarios|".number_format($row_srcSQL["P0200"],2,".","")."|0"."\r";
     fwrite($fh,$Dato.PHP_EOL);
     }
     

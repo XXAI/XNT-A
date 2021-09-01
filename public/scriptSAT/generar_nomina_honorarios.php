@@ -9,6 +9,7 @@ $Periodicidad = $_POST['periodicidad'];
 $TablaName = $_POST['nombre_nomina'];
 $TipoNomina = "01";
 $Adenda = $_POST['adenda'];
+$TipoHonorario = (isset($_POST['tipo_honorario']))?$_POST['tipo_honorario']:'Honorarios';
 
 echo "Recibida información del formulario.<br>\n";
 
@@ -203,7 +204,7 @@ $query_srcSQL = "CREATE TABLE `$TablaName` (
         $mysqli->rollback();
     }
     echo "Se inicia comienzo de generacion de archivos.<br>\n";
-    $carpeta = GenerarNominaSAT($TipoNomina, $TablaName, $FechaGeneracion, $FechaInicio, $FechaFinal, $Dias, $Periodicidad, $Adenda,$mysqli);
+    $carpeta = GenerarNominaSAT($TipoNomina, $TablaName, $FechaGeneracion, $FechaInicio, $FechaFinal, $Dias, $Periodicidad, $Adenda, $TipoHonorario,$mysqli);
     echo "<br>Se termino generacion de archivos.<br>\n";
 
     $storage_path = $public_path.'scriptSAT/';
