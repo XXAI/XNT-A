@@ -14,6 +14,7 @@ use \Validator,\Hash, \Response, \DB;
 use TRA, DBF;
 
 use XBase\Table;
+use XBase\TableReader;
 
 class ImportarController extends Controller
 {
@@ -198,7 +199,8 @@ class ImportarController extends Controller
         try{
             $datos_dbf = [];
 
-            $table = new Table($archivo,array_values($columnas_dbf),'utf-8');
+            //$table = new Table($archivo,array_values($columnas_dbf),'utf-8');
+            $table = new TableReader($archivo, [ 'columns' => array_values($columnas_dbf) ],'utf-8');
 
             DB::beginTransaction();
             while($record = $table->nextRecord()){
