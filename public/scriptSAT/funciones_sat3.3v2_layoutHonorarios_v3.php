@@ -119,6 +119,18 @@ $Dato="DC|3.3|".$serie.$TipoNomina."|".$Folio."|".$FechaHoraGeneracion."|99|".nu
         fwrite($fh,$Dato.PHP_EOL);
     }
 
+	$NPD=1;
+
+	if($row_srcSQL["P24GA"] > 0){//Harima:Trabajando con aguinaldos
+		$Dato="NPD|".($NPD++)."|002|P24GA|Gratificación de Fin de Año|".number_format($row_srcSQL["P24GA"],2,'.','')."|0\r";
+		fwrite($fh,$Dato.PHP_EOL);
+	}
+
+	if($row_srcSQL["P24GG"] > 0){//Harima:Trabajando con aguinaldos
+		$Dato="NPD|".($NPD++)."|046|P24GG|Exento por Gratificación de Fin de Año|0|".number_format($row_srcSQL["P24GG"],2,'.','')."\r";
+		fwrite($fh,$Dato.PHP_EOL);
+	}
+
     /*
 	if($PercepcionNoGravado>0)
 	{
@@ -131,7 +143,6 @@ $Dato="DC|3.3|".$serie.$TipoNomina."|".$Folio."|".$FechaHoraGeneracion."|99|".nu
     }
     */
 
-    $NPD=1;
 
 	if($TipoHonorario == 'E023'){
 		$clave = 'P0500';
@@ -210,10 +221,11 @@ $Dato="DC|3.3|".$serie.$TipoNomina."|".$Folio."|".$FechaHoraGeneracion."|99|".nu
 		//$Dato="NOP|999|999|S. PARA EL EMPLEO|0.01||||\r";
         fwrite($fh,$Dato.PHP_EOL);
 	}else */
-	if($row_srcSQL["OTROS_PAGOS"] > 0){
+
+	/*if($row_srcSQL["OTROS_PAGOS"] > 0){ //Harima:Trabajando con aguinaldos
         $Dato="NOP|999|P24GA|GRATIFICACIÓN DE FIN DE AÑO|".number_format($row_srcSQL["OTROS_PAGOS"],2,".","")."||||\r";
         fwrite($fh,$Dato.PHP_EOL);
-	}
+	}*/
 
 	$Dato="NOP|999|999|Subsidio para el empleo (efectivamente entregado al trabajador)|0.00||||\r";
 	fwrite($fh,$Dato.PHP_EOL);
