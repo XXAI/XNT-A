@@ -83,7 +83,7 @@ class HomologarFormatosController extends Controller{
                         'P57LL'             => '',
                         'P59TT'             => '',
                         'P73MM'             => '',
-                        'P73RR'             => '',
+                        'P32DD'             => '',
                         'PER_NOGRAVA'       => '',
                         'TOT_PERCEPCION'    => 'isr',
                         'OTROS_PAGOS'       => '',

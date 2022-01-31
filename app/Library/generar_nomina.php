@@ -72,7 +72,7 @@ $srcSQL = $mysqli->query($query_srcSQL) or die($mysqli->error.__LINE__);
     `P57LL` double DEFAULT NULL,
     `P59TT` double DEFAULT NULL,
     `P73MM` double DEFAULT NULL,
-    `P73RR` double DEFAULT NULL,
+    `P32DD` double DEFAULT NULL,
     `PER_NOGRAVA` double DEFAULT NULL,
     `TOT_PERCEPCION` double DEFAULT NULL,
     `OTROS_PAGOS` text DEFAULT NULL,

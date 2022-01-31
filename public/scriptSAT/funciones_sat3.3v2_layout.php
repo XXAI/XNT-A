@@ -343,8 +343,13 @@ $Dato="DC|3.3|NOM".$TipoNomina."|".$Folio."|".$FechaHoraGeneracion."|99|".number
     fwrite($fh,$Dato.PHP_EOL);
     }
 
-    if($row_srcSQL["P73RR"]){
+    /*if($row_srcSQL["P73RR"]){
     $Dato="NPD|".($NPD++)."|038|P73RR|Compensación de ISR Día de Reyes|0|".number_format($row_srcSQL["P73RR"],2,".","")."\r";
+    fwrite($fh,$Dato.PHP_EOL);
+    }*/
+
+    if($row_srcSQL["P32DD"]){
+    $Dato="NPD|".($NPD++)."|038|P32DD|Exento de la Prima Dominical|0|".number_format($row_srcSQL["P32DD"],2,".","")."\r";
     fwrite($fh,$Dato.PHP_EOL);
     }
 
