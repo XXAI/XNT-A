@@ -95,7 +95,7 @@ function GenerarNominaSAT($TipoNomina, $TablaName, $FechaGeneracion, $FechaInici
 				//echo "aqui va: <br>"; exit();
 
 				$filepath = $Carpeta."/".$row_srcSQL["mmFolio"]."_".$row_srcSQL["CURP"].".txt";
-				$fh = fopen($filepath,"w");
+				$fh = fopen($filepath,"wb");
 
 				$HoraGeneracion = date("H:i:s", mktime(0, 0, $Segundo, substr($FechaGeneracion,5,2), substr($FechaGeneracion,8,2), substr($FechaGeneracion,0,4)));
 				
