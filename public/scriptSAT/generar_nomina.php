@@ -149,12 +149,22 @@ $query_srcSQL = "CREATE TABLE `$TablaName` (
 
         if($type == "text/plain"){//Si el Mime coincide con CSV
             $destinationPath = $public_path.'scriptSAT/archivos-csv/';
-            
             $csv = $destinationPath . $nombreArchivo.".csv";
 
-            if (move_uploaded_file($_FILES['archivo_csv']['tmp_name'], $csv)) {
+            $file_data = file_get_contents($_FILES['archivo_csv']['tmp_name']);
+            
+            $encoding = mb_detect_encoding($file_data,"UTF-8",true);
+            if($encoding === false){
+                echo "Codificando a UTF-8.<br>\n";
+                $utf8_file_data = utf8_encode($file_data);
+            }else{
+                $utf8_file_data = $file_data;
+            }
+            
+            //if (move_uploaded_file($_FILES['archivo_csv']['tmp_name'], $csv)) {
+            if(file_put_contents($csv,$utf8_file_data)){
                 echo "El fichero es válido y se subió con éxito.<br>\n";
-            } else {
+            }else{
                 echo "¡Posible ataque de subida de ficheros!<br>\n";
             }
 
@@ -196,9 +206,9 @@ $query_srcSQL = "CREATE TABLE `$TablaName` (
     }catch(\Exception $e){
         $mysqli->rollback();
     }
-    echo "Se inicia comienzo de generacion de archivos.<br>\n";
+    echo "Se inicia la generacion de archivos.<br>\n";
     $carpeta = GenerarNominaSAT($TipoNomina, $TablaName, $FechaGeneracion, $FechaInicio, $FechaFinal, $Dias, $Periodicidad, $mysqli);
-    echo "Se termino comienzo de generacion de archivos.<br>\n";
+    echo "Se termino la generacion de archivos.<br>\n";
 
     $storage_path = $public_path.'scriptSAT/';
 
