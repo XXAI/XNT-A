@@ -94,8 +94,14 @@ $Dato="DC|3.3|".$serie.$TipoNomina."|".$Folio."|".$FechaHoraGeneracion."|99|".nu
 	}else{
 		$departamento = '';
 	}
-
-	$Dato="CNR|".$row_srcSQL["TipoE"]."|".$FechaPago."|".$FechaInicio."|".$FechaFinal."|".$Dias."|".($TotalPercepciones ? number_format($TotalPercepciones,2,'.','') : '')."|".number_format($TotalDeduccionesEtiqueta,2,".","")."|".number_format($TotalOtrosPagos,2,".","")."|".$row_srcSQL["CURP"]."||||09||".$Turno."|09|".$row_srcSQL["NUMCHE"]."|".$departamento."|".$Puesto."||".$Periodicidad."|||||CHP"."\r";
+	
+	if($TipoHonorario == 'E023' || $TotalOtrosPagos > 0){
+		$total_otros_pagos_formateado = number_format($TotalOtrosPagos,2,".","");
+	}else{
+		$total_otros_pagos_formateado = '';
+	}
+	
+	$Dato="CNR|".$row_srcSQL["TipoE"]."|".$FechaPago."|".$FechaInicio."|".$FechaFinal."|".$Dias."|".($TotalPercepciones ? number_format($TotalPercepciones,2,'.','') : '')."|".number_format($TotalDeduccionesEtiqueta,2,".","")."|".$total_otros_pagos_formateado."|".$row_srcSQL["CURP"]."||||09||".$Turno."|09|".$row_srcSQL["NUMCHE"]."|".$departamento."|".$Puesto."||".$Periodicidad."|||||CHP"."\r";
 	fwrite($fh,$Dato.PHP_EOL);
 
     if($TotalDeducciones>0)
@@ -227,8 +233,10 @@ $Dato="DC|3.3|".$serie.$TipoNomina."|".$Folio."|".$FechaHoraGeneracion."|99|".nu
         fwrite($fh,$Dato.PHP_EOL);
 	}*/
 
-	$Dato="NOP|999|999|Subsidio para el empleo (efectivamente entregado al trabajador)|0.00||||\r";
-	fwrite($fh,$Dato.PHP_EOL);
+	if($TipoHonorario == 'E023'){
+		$Dato="NOP|999|999|Subsidio para el empleo (efectivamente entregado al trabajador)|0.00||||\r";
+		fwrite($fh,$Dato.PHP_EOL);
+	}
 	
     $Dato="ADO|74|ISA961203QN5|0|Chiapas\r";
     fwrite($fh,$Dato.PHP_EOL);
